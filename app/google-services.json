@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "242012823824",
+    "firebase_url": "https://gincanaproject.firebaseio.com",
+    "project_id": "gincanaproject",
+    "storage_bucket": "gincanaproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242012823824:android:a3e3c9e684c0a2cf",
+        "android_client_info": {
+          "package_name": "com.bsoftwares.benjamin.ideia01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242012823824-egh8479ghgblu45j8ed2g0p80anp7td7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bsoftwares.benjamin.ideia01",
+            "certificate_hash": "73b0c0328f2746578193b3acadd7070792b8a7a0"
+          }
+        },
+        {
+          "client_id": "242012823824-0npiualj2a08ct9h1sud9jmai0lclc8q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYRQ5xdIE4uzWi2Wl3FFDd3fDzDxgXqW0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242012823824-0npiualj2a08ct9h1sud9jmai0lclc8q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    //Cores de resposta
+    <color name="correctAnswer">#7CC37C</color>
+    <color name="wrongAnswer">#f85441</color>
+    <color name="regularAnswer">#d2cdc7</color>
+
+    //Basic Colors
+    <color name="white">#FFF</color>
+
+    //selectedColors
+    <color name="unselected">#c5c5c5</color>
+    <color name="selected">#767676</color>
+
+
+</resources>
