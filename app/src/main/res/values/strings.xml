@@ -5,11 +5,13 @@
     <string name="title_notifications">Notifications</string>
     <string name="start">Start</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_game">GameActivity</string>
     <string name="pergunta">Pergunta %1$d</string>
-    <string name="pontuacao">%1$d/%2$d</string>
+    <string name="pontuacao">%1$d/%2$d - Nota (%3$s/100)</string>
+    <string name="nquestoes">%1$d/%2$d</string>
+    <string name="referencia">Referência: %1$s</string>
     <string name="resultado">Resultado</string>
     <string name="voltar">Voltar</string>
     <string name="regras">Regras</string>
@@ -18,4 +20,13 @@
     <string name="f_cil">Fácil</string>
     <string name="m_dio">Médio</string>
     <string name="dif_cil">Difícil</string>
+    <string name="quantidade_de_quest_es">Quantidade de questões</string>
+    <string name="tempo_5_segundos_por_quest_o">Tempo (10 Segundos por questão)</string>
+    <string name="ajuda_as_cartas">Ajuda as cartas</string>
+    <string name="dica_refer_ncia">Referência ou dica</string>
+    <string name="tentativa_extra">Tentativa Extra</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="valor_pergunta">Essa pergunta vale R$%1$d</string>
+    <string name="valor_resultado">Acertar R$%1$d | Desistir R$%2$d | Errar R$%3$d</string>
+    <string name="resultado_final_game_show">Você ganhou R$%1$d</string>
 </resources>

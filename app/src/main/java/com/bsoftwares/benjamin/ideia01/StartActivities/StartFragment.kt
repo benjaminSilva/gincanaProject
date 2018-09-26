@@ -1,4 +1,4 @@
-package com.bsoftwares.benjamin.ideia01
+package com.bsoftwares.benjamin.ideia01.StartActivities
 
 
 import android.app.AlertDialog
@@ -6,20 +6,23 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.SeekBar
 import android.widget.Toast
-import com.bsoftwares.benjamin.ideia01.QuizGame.GameActivity
+import com.bsoftwares.benjamin.ideia01.GameModes.GameActivity
 import kotlinx.android.synthetic.main.fragment_start.*
 import kotlinx.android.synthetic.main.rules.view.*
+import android.widget.SeekBar.OnSeekBarChangeListener
+import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
+import com.bsoftwares.benjamin.ideia01.R
+
 
 class StartFragment : Fragment(){
-
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +36,8 @@ class StartFragment : Fragment(){
     var listaD : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     var listaF : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     var listaM : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
+    var checkCounter = 0
+    //var isTempo = false
 
     fun separarPerguntas(){
         for (pergunta : QuestionParcelable in listaDePerguntas!!){
@@ -48,17 +53,28 @@ class StartFragment : Fragment(){
         }
     }
 
+    fun getMax(view : View): Int {
+        var total = 0
+        if (view.btnKids.isChecked)
+            total+=listaK!!.size
+        if (view.btnFacil.isChecked)
+            total+=listaF!!.size
+        if (view.btnMedio.isChecked)
+            total+=listaM!!.size
+        if (view.btnDificil.isChecked)
+            total+=listaD!!.size
+
+        return total
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)!!
-
-
         if(arguments!=null){
             listaDePerguntas = arguments?.getParcelableArrayList("Perguntas")
         }
-        separarPerguntas()
-
+        if (listaK!!.isEmpty())
+            separarPerguntas()
 
         BtnStart.setOnClickListener {
             var listaPerguntasSelecionadas : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
@@ -86,94 +102,88 @@ class StartFragment : Fragment(){
                     }
                 }
                 listaPerguntasSelecionadas!!.shuffle()
-                startActivity(Intent(context, GameActivity::class.java).putExtra("Perguntas", listaDePerguntas).putExtra("PerguntasSelecionadas",listaPerguntasSelecionadas))
+                startActivity(Intent(context, GameActivity::class.java).putExtra("PerguntasSelecionadas",ArrayList(listaPerguntasSelecionadas.subList(0,sharedPref.getInt("progressoNperguntas",5)))).putExtra("tempoParaPergunta",sharedPref.getBoolean("tempoParaPergunta",false)))
             }else{
                 listaPerguntasSelecionadas = listaDePerguntas
-                startActivity(Intent(context, GameActivity::class.java).putExtra("Perguntas", listaDePerguntas).putExtra("PerguntasSelecionadas",listaPerguntasSelecionadas))
+                listaPerguntasSelecionadas!!.shuffle()
+                startActivity(Intent(context, GameActivity::class.java).putExtra("PerguntasSelecionadas",listaPerguntasSelecionadas).putExtra("tempoParaPergunta",sharedPref.getBoolean("tempoParaPergunta",false)))
             }
         }
 
         btnRules.setOnClickListener { it ->
             val dialogView = activity!!.layoutInflater.inflate(R.layout.rules,null)
-
-            var checkCounter = 0
+            var nMaxQuestoes = 0
+            var progresso = 5
 
             if(sharedPref.contains("perguntasCrianca")){
                 if(sharedPref.getBoolean("perguntasCrianca",false)){
+                    nMaxQuestoes+=listaK!!.size
                     dialogView.btnKids.isChecked = true
                     checkCounter++
                 }
                 if(sharedPref.getBoolean("perguntasFaceis",false)){
+                    nMaxQuestoes+=listaF!!.size
                     dialogView.btnFacil.isChecked = true
                     checkCounter++
                 }
                 if(sharedPref.getBoolean("perguntasMedianas",false)){
+                    nMaxQuestoes+=listaM!!.size
                     dialogView.btnMedio.isChecked = true
                     checkCounter++
                 }
                 if(sharedPref.getBoolean("perguntasDificeis",false)){
+                    nMaxQuestoes+=listaD!!.size
                     dialogView.btnDificil.isChecked = true
                     checkCounter++
                 }
+                dialogView.cbTempo.isChecked = sharedPref.getBoolean("tempoParaPergunta",false)
+                dialogView.sbNquestoes.progress = sharedPref.getInt("progressoNperguntas",5)
             } else{
                 dialogView.btnKids.isChecked = true
                 dialogView.btnFacil.isChecked = true
                 dialogView.btnMedio.isChecked = true
                 dialogView.btnDificil.isChecked = true
+                nMaxQuestoes = listaDePerguntas!!.size
                 checkCounter = 4
             }
+            dialogView.txtProgress.text = getString(R.string.nquestoes,sharedPref.getInt("progressoNperguntas",5),getMax(dialogView))
+
+            val yourSeekBarListener = object : OnSeekBarChangeListener {
+                override fun onStopTrackingTouch(seekBar: SeekBar) {
+
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {
+
+                }
+
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    when (seekBar!!.id) {
+                        R.id.sbNquestoes -> if (progress<5) {
+                            seekBar.progress = 5
+                        }else {
+                            dialogView.txtProgress.text = getString(R.string.nquestoes,progress,dialogView.sbNquestoes.max)
+                            progresso = progress
+                        }
+                    }
+
+                }
+            }
+            dialogView.sbNquestoes.max = nMaxQuestoes
+            dialogView.sbNquestoes.setOnSeekBarChangeListener(yourSeekBarListener)
 
             val builder = AlertDialog.Builder(context)
             dialogView.btnKids.setOnClickListener {
-                if(!dialogView.btnKids.isChecked){
-                    if(checkCounter<=1){
-                        dialogView.btnKids.isChecked = true
-                        Toast.makeText(context,"Pelo menos uma dificuldade deve ficar selecionada",Toast.LENGTH_SHORT).show()
-                    } else{
-                        checkCounter--
-                    }
-                }else{
-                    checkCounter++
-                }
+                btnFunction(dialogView,progresso,dialogView.btnKids)
             }
             dialogView.btnFacil.setOnClickListener {
-                if(!dialogView.btnFacil.isChecked){
-                    if(checkCounter<=1){
-                        Toast.makeText(context,"Pelo menos uma dificuldade deve ficar selecionada",Toast.LENGTH_SHORT).show()
-                        dialogView.btnFacil.isChecked = true
-                    } else{
-                        checkCounter--
-                    }
-                }else{
-                    checkCounter++
-                }
-
+                btnFunction(dialogView,progresso,dialogView.btnFacil)
             }
             dialogView.btnMedio.setOnClickListener {
-                if(!dialogView.btnMedio.isChecked){
-                    if(checkCounter<=1){
-                        dialogView.btnMedio.isChecked = true
-                        Toast.makeText(context,"Pelo menos uma dificuldade deve ficar selecionada",Toast.LENGTH_SHORT).show()
-                    } else{
-                        checkCounter--
-                    }
-                }else{
-                    checkCounter++
-                }
-
+                btnFunction(dialogView,progresso,dialogView.btnMedio)
             }
             dialogView.btnDificil.setOnClickListener {
-                if(!dialogView.btnDificil.isChecked){
-                    if(checkCounter<=1){
-                        dialogView.btnDificil.isChecked = true
-                        Toast.makeText(context,"Pelo menos uma dificuldade deve ficar selecionada",Toast.LENGTH_SHORT).show()
-                    } else{
-                        checkCounter--
-                    }
-                }else{
-                    checkCounter++
-                }
-
+                btnFunction(dialogView,progresso,dialogView.btnDificil)
             }
             builder.setOnDismissListener {
                 with (sharedPref.edit()) {
@@ -181,6 +191,8 @@ class StartFragment : Fragment(){
                     putBoolean("perguntasFaceis",dialogView.btnFacil.isChecked)
                     putBoolean("perguntasMedianas",dialogView.btnMedio.isChecked)
                     putBoolean("perguntasDificeis",dialogView.btnDificil.isChecked)
+                    putBoolean("tempoParaPergunta",dialogView.cbTempo.isChecked)
+                    putInt("progressoNperguntas",progresso)
                     apply()
                 }
             }
@@ -188,6 +200,23 @@ class StartFragment : Fragment(){
             val regras = builder.create()
             regras.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             regras.show()
+        }
+    }
+
+    fun btnFunction ( view : View, progresso : Int , button : CheckBox) {
+        if(!button.isChecked){
+            if(checkCounter<=1){
+                button.isChecked = true
+                Toast.makeText(context,"Pelo menos uma dificuldade deve ficar selecionada",Toast.LENGTH_SHORT).show()
+            } else{
+                view.sbNquestoes.max = getMax(view)
+                view.txtProgress.text = getString(R.string.nquestoes,progresso,view.sbNquestoes.max)
+                checkCounter--
+            }
+        }else{
+            view.sbNquestoes.max = getMax(view)
+            view.txtProgress.text = getString(R.string.nquestoes,progresso,view.sbNquestoes.max)
+            checkCounter++
         }
     }
 }

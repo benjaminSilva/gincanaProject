@@ -1,4 +1,4 @@
-package com.bsoftwares.benjamin.ideia01
+package com.bsoftwares.benjamin.ideia01.Questions
 
 import android.util.Log
 import com.google.firebase.database.*
@@ -24,7 +24,7 @@ object QuestionModel : Observable() {
 
         mValueDataListener = object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                if(p0!=null){
+                if(true){
                     Log.i("CakeModel","Deu ruim")
                 }
             }
@@ -33,7 +33,7 @@ object QuestionModel : Observable() {
                 try {
                     Log.i("CakeModel","Data Updated Line 29")
                     val data: ArrayList<Question> = ArrayList()
-                    if(dataSnapshot != null){
+                    if(true){
                         for (snapshot : DataSnapshot in dataSnapshot.children){
                             try {
                                 data.add(Question(snapshot))

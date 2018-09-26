@@ -1,4 +1,4 @@
-package com.bsoftwares.benjamin.ideia01
+package com.bsoftwares.benjamin.ideia01.Questions
 
 
 import com.google.firebase.database.DataSnapshot
@@ -19,6 +19,8 @@ class Question (snapshot: DataSnapshot){
 
     lateinit var id: String
 
+    lateinit var reference: String
+
     init {
         try {
             val data : HashMap<String,Any> = snapshot.value as HashMap<String, Any>
@@ -29,6 +31,7 @@ class Question (snapshot: DataSnapshot){
             answerD = data["answerD"] as String
             correctAnswer = data["correctAnswer"] as String
             dificulty = data["dificulty"] as String
+            reference = data["reference"] as String
         }catch (e:Exception){
             e.printStackTrace()
         }

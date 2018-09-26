@@ -21,9 +21,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".QuizGame.GameActivity"
+            android:name=".GameModes.GameActivity"
             android:label="@string/title_activity_game"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GameModes.Main2Activity"
+            android:label="@string/title_activity_main2"></activity>
     </application>
 
 </manifest>

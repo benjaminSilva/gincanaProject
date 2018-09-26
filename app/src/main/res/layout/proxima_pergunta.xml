@@ -1,59 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/roundedcorners"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/regularAnswer"
-    tools:context=".GameModes.QuizGame.ResultsFragment"
-    android:id="@+id/clResults">
-
+    android:id="@+id/proximaPerguntaView">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/txtValorPergunta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/resultado"
-        android:textSize="36sp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtResultado"
+    <Button
+        android:id="@+id/btnNextQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvResultados"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRetorna"
+        android:text="Próxima Pergunta"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtResultado" />
+        app:layout_constraintTop_toBottomOf="@+id/txtValorPergunta" />
 
     <Button
-        android:id="@+id/btnRetorna"
+        android:visibility="gone"
+        android:id="@+id/btnDesistirFinal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/voltar"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Desistir"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnNextQuestion" />
+
 </android.support.constraint.ConstraintLayout>

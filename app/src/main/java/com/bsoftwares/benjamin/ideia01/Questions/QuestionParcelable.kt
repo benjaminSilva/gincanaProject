@@ -1,8 +1,9 @@
-package com.bsoftwares.benjamin.ideia01
+package com.bsoftwares.benjamin.ideia01.Questions
 
 import android.os.Parcel
 import android.os.Parcelable
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class QuestionParcelable() : Parcelable {
 
     lateinit var answerB: String
@@ -19,6 +20,10 @@ class QuestionParcelable() : Parcelable {
 
     lateinit var id: String
 
+    var selectedAnswer = ""
+
+    lateinit var reference: String
+
     constructor(parcel: Parcel) : this() {
         answerB = parcel.readString()
         answerC = parcel.readString()
@@ -27,6 +32,8 @@ class QuestionParcelable() : Parcelable {
         question = parcel.readString()
         dificulty = parcel.readString()
         id = parcel.readString()
+        selectedAnswer = parcel.readString()
+        reference = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -37,6 +44,8 @@ class QuestionParcelable() : Parcelable {
         parcel.writeString(question)
         parcel.writeString(dificulty)
         parcel.writeString(id)
+        parcel.writeString(selectedAnswer)
+        parcel.writeString(reference)
     }
 
     override fun describeContents(): Int {

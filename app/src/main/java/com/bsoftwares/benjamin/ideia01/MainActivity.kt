@@ -1,16 +1,17 @@
 package com.bsoftwares.benjamin.ideia01
 
-import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.design.widget.BottomNavigationView
 //import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Toast
+import com.bsoftwares.benjamin.ideia01.Questions.Question
+import com.bsoftwares.benjamin.ideia01.Questions.QuestionModel
+import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
+import com.bsoftwares.benjamin.ideia01.StartActivities.StartFragment
+import com.bsoftwares.benjamin.ideia01.StartActivities.StartShowGameFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), Observer{
 
@@ -19,9 +20,11 @@ class MainActivity : AppCompatActivity(), Observer{
         if(dataFirabase!=null){
             data = dataFirabase
             criarParcelable()
+            var bundle = Bundle()
             bundle.putParcelableArrayList("Perguntas",lista)
             startFragment.arguments = bundle
             carregandoMain.visibility = View.INVISIBLE
+            navigation.visibility = View.VISIBLE
             supportFragmentManager.beginTransaction().replace(R.id.frameMain,startFragment).commit()
         }
     }
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity(), Observer{
             questionParcelable.answerC = question.answerC
             questionParcelable.answerD = question.answerD
             questionParcelable.question = question.question
+            questionParcelable.reference = question.reference
             questionParcelable.id = question.id
             questionParcelable.dificulty = question.dificulty
             questionParcelable.correctAnswer = question.correctAnswer
@@ -45,12 +49,20 @@ class MainActivity : AppCompatActivity(), Observer{
     }
 
 
-    /*private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
+                val bundle = Bundle()
+                bundle.putParcelableArrayList("Perguntas",lista)
+                startFragment.arguments = bundle
+                supportFragmentManager.beginTransaction().replace(R.id.frameMain,startFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
+                val bundle = Bundle()
+                bundle.putParcelableArrayList("Perguntas",lista)
+                showFragment.arguments = bundle
+                supportFragmentManager.beginTransaction().replace(R.id.frameMain,showFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
@@ -58,22 +70,24 @@ class MainActivity : AppCompatActivity(), Observer{
             }
         }
         false
-    }*/
+    }
 
-    val startFragment : Fragment = StartFragment()
-    val bundle : Bundle = Bundle()
+    val startFragment = StartFragment()
+    val showFragment = StartShowGameFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         QuestionModel.addObserver(this)
         if(intent.extras!=null){
             carregandoMain.visibility = View.INVISIBLE
-            bundle.putParcelableArrayList("Perguntas", intent.extras.getParcelableArrayList<QuestionParcelable>("Perguntas"))
+            var bundle = Bundle()
+            bundle.putParcelableArrayList("Perguntas", intent.extras!!.getParcelableArrayList<QuestionParcelable>("Perguntas"))
             startFragment.arguments = bundle
             supportFragmentManager.beginTransaction().replace(R.id.frameMain,startFragment).commit()
         }
-
-        //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
+
+
 }
