@@ -1,30 +1,38 @@
 package com.bsoftwares.benjamin.ideia01.StartActivities
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bsoftwares.benjamin.ideia01.GameModes.GameActivity
+import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
 
 import com.bsoftwares.benjamin.ideia01.R
+import kotlinx.android.synthetic.main.fragment_start_gincana.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- *
- */
 class StartGincanaFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_start_gincana, container, false)
     }
 
+    var listaTodasPerguntas : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if(arguments!=null){
+            listaTodasPerguntas = arguments?.getParcelableArrayList("Perguntas")
+        }
+
+        btnGincanaStart.setOnClickListener {
+            startActivity(Intent(context, GameActivity::class.java).putExtra("PerguntasSelecionadas",listaTodasPerguntas).putExtra("isGincana",true))
+        }
+    }
 }

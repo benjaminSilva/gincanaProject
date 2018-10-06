@@ -29,4 +29,15 @@
     <string name="valor_pergunta">Essa pergunta vale R$%1$d</string>
     <string name="valor_resultado">Acertar R$%1$d | Desistir R$%2$d | Errar R$%3$d</string>
     <string name="resultado_final_game_show">Você ganhou R$%1$d</string>
+    <string name="modo_gincana">Modo Gincana</string>
+    <string name="crie_at_4_times_para_competir_entre_si">Crie até 4 times para competir entre si</string>
+    <string name="time_1">Time 1</string>
+    <string name="time_2">Time 2</string>
+    <string name="mais">+</string>
+    <string name="a_mesma_pergunta_vai_para_todos_os_participantes">A mesma pergunta vai para todos os times participantes</string>
+    <string name="uma_pergunta_para_cada_participante">Uma pergunta para cada time participante</string>
+    <string name="adicione_o_nome_dos_times">Adicione o nome dos times</string>
+    <string name="continuar">Continuar</string>
+    <string name="time_4">Time 4</string>
+    <string name="time_3">Time 3</string>
 </resources>

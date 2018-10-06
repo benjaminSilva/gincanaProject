@@ -3,6 +3,7 @@ package com.bsoftwares.benjamin.ideia01.StartActivities
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -20,6 +21,13 @@ import kotlinx.android.synthetic.main.rules.view.*
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
 import com.bsoftwares.benjamin.ideia01.R
+import android.R.id.edit
+import android.content.SharedPreferences
+import android.content.Context.MODE_PRIVATE
+import com.google.android.gms.flags.impl.SharedPreferencesFactory.getSharedPreferences
+import com.bsoftwares.benjamin.ideia01.MainActivity
+
+
 
 
 class StartFragment : Fragment(){
@@ -37,6 +45,12 @@ class StartFragment : Fragment(){
     var listaF : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     var listaM : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     var checkCounter = 0
+    val TESTE = "TESTE"
+    val PRIMEIRO = "Primeiro"
+    val SEGUNDO = "Segundo"
+    val TERCEIRO = "Terceiro"
+    val QUARTO = "Quarto"
+    val QUINTO = "Quinto"
     //var isTempo = false
 
     fun separarPerguntas(){
@@ -75,6 +89,31 @@ class StartFragment : Fragment(){
         }
         if (listaK!!.isEmpty())
             separarPerguntas()
+
+
+        /*val alerta: AlertDialog.Builder
+        alerta = AlertDialog.Builder(activity)
+        alerta.setTitle("Aviso")
+        alerta.setIcon(R.mipmap.ic_launcher)
+                .setMessage("ATEN��O: Aplicatico com funcionalidade limitada!!!")
+                .setPositiveButton("OK") { dialogInterface, i ->
+                    val editor = sharedPref.edit()
+                    if (sharedPref.contains(TESTE)){
+                        var inteiro = sharedPref.getInt(TESTE,0)
+                        if (sharedPref.getInt(TESTE,0)<5){
+                            editor.putInt(TESTE,inteiro+1).apply()
+                        }else{
+                            activity!!.finishAndRemoveTask()
+                        }
+                    } else{
+                        editor.putInt(TESTE,0).apply()
+                    }
+                }
+
+        val alertDialog = alerta.create()
+        alertDialog.show()*/
+
+
 
         BtnStart.setOnClickListener {
             var listaPerguntasSelecionadas : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
@@ -158,7 +197,7 @@ class StartFragment : Fragment(){
                 }
 
                 override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                    when (seekBar!!.id) {
+                    when (seekBar.id) {
                         R.id.sbNquestoes -> if (progress<5) {
                             seekBar.progress = 5
                         }else {

@@ -19,7 +19,6 @@ class StartShowGameFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_show_game, container, false)
     }
 
-    var listaK : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     var listaD : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     var listaF : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     var listaM : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()

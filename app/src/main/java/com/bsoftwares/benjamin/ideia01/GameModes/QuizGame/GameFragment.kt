@@ -31,14 +31,18 @@ class GameFragment : Fragment() {
 
     //Variáveis
     val resultsFragment: Fragment = ResultsFragment()
-    var listaSelecionadas: java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     var perguntas: ArrayList<String> = ArrayList()
     var pontuacao = 0
     lateinit var timer: CountDownTimer
     var isTempo = false
     var isGameShow = false
     var tentativaExtra = false
-    val listaValores: IntArray = intArrayOf(1000, 2000, 3000,4000,5000,10000,20000,30000,40000,50000,100000,200000,300000,400000,500000,1000000)
+    var position = 0
+    var tempo = 0.toLong()
+    var onResume = false
+    var listaSelecionadas: java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
+
+    val listaValores: IntArray = intArrayOf(1000, 2000, 3000, 4000, 5000, 10000, 20000, 30000, 40000, 50000, 100000, 200000, 300000, 400000, 500000, 1000000)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,30 +51,40 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (arguments != null) {
-            listaSelecionadas = arguments?.getParcelableArrayList("PerguntasSelecionadas")
-            if (arguments!!.containsKey("isGameShow")) {
-                isGameShow = true
-            } else {
-                btnTentativaExtra.visibility = View.GONE
-                btnAjudaCartas.visibility = View.GONE
-                btnReferencia.visibility = View.GONE
-                btnDesistir.visibility = View.GONE
+
+        if (savedInstanceState == null) {
+            if (arguments != null) {
+                listaSelecionadas = arguments?.getParcelableArrayList("PerguntasSelecionadas")
+                if (arguments!!.containsKey("isGameShow")) {
+                    isGameShow = true
+                } else {
+                    btnTentativaExtra.visibility = View.GONE
+                    btnAjudaCartas.visibility = View.GONE
+                    btnReferencia.visibility = View.GONE
+                    btnDesistir.visibility = View.GONE
+                }
+                isTempo = arguments!!.getBoolean("tempoParaPergunta")
+                if (isTempo && !isGameShow) {
+                    tempo = listaSelecionadas!!.size.toLong()*10
+                    setTimer(tempo)
+                }
+                updateView(0, listaSelecionadas)
             }
-            isTempo = arguments!!.getBoolean("tempoParaPergunta")
-            if (isTempo && !isGameShow) {
-                timer = object : CountDownTimer(listaSelecionadas!!.size.toLong() * 10000, 1000) {
-                    override fun onFinish() {
-                        irParaResultados()
-                        return
-                    }
-                    override fun onTick(p0: Long) {
-                        txtTimerQuiz.text = (p0 / 1000).toString()
-                    }
-                }.start()
-            }
-            updateView(0)
         }
+    }
+
+    fun setTimer(time : Long){
+        timer = object : CountDownTimer(  time * 1000, 1000) {
+            override fun onFinish() {
+                irParaResultados(listaSelecionadas)
+                return
+            }
+
+            override fun onTick(p0: Long) {
+                tempo = p0/1000
+                txtTimerQuiz.text = (p0 / 1000).toString()
+            }
+        }.start()
     }
 
     fun desbilitarBotoes() {
@@ -109,20 +123,24 @@ class GameFragment : Fragment() {
                 .playOn(outro3)
     }
 
-    fun irParaResultados() {
+    fun irParaResultados(listaPerguntas: ArrayList<QuestionParcelable>?) {
         val bundle = Bundle()
-        bundle.putParcelableArrayList("PerguntasSelecionadas", listaSelecionadas)
+        bundle.putParcelableArrayList("PerguntasSelecionadas", listaPerguntas)
         resultsFragment.arguments = bundle
-        if(isTempo)
+        if (isTempo)
             timer.cancel()
-        if(isGameShow)
+        if (isGameShow)
             bundle.putInt("pontuacao", pontuacao)
-        activity!!.supportFragmentManager.beginTransaction().add(R.id.frameGame, resultsFragment).commit()
+        activity!!.supportFragmentManager.beginTransaction().add(R.id.frameGame, resultsFragment,"GameResultado").commit()
+        Handler().postDelayed({
+            activity!!.supportFragmentManager.beginTransaction().remove(this).commit()
+        }, 1000)
+
     }
 
-    fun definirCertoErrado(escolhido: Button, outro1: Button, outro2: Button, outro3: Button, resposta: String, pos: Int) {
+    fun definirCertoErrado(escolhido: Button, outro1: Button, outro2: Button, outro3: Button, resposta: String, pos: Int, listaPerguntas: ArrayList<QuestionParcelable>?) {
         desbilitarBotoes()
-        listaSelecionadas!![pos].selectedAnswer = escolhido.text.toString()
+        listaPerguntas!![pos].selectedAnswer = escolhido.text.toString()
         var isCerto = false
         if (escolhido.text == resposta) {
             isCerto = true
@@ -132,99 +150,100 @@ class GameFragment : Fragment() {
             escolhido.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.correctAnswer))
         } else {
             escolhido.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.wrongAnswer))
-            if(!tentativaExtra)
+            if (!tentativaExtra)
                 if (!isGameShow)
-                    when (resposta){
-                        outro1.text ->outro1.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.correctAnswer))
-                        outro2.text ->outro2.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.correctAnswer))
-                        outro3.text ->outro3.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.correctAnswer))
+                    when (resposta) {
+                        outro1.text -> outro1.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.correctAnswer))
+                        outro2.text -> outro2.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.correctAnswer))
+                        outro3.text -> outro3.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.correctAnswer))
                     }
-            if(tentativaExtra){
-                updateView(pos)
+            if (tentativaExtra) {
+                updateView(pos, listaPerguntas)
                 return
             }
-            when (pos){
+            when (pos) {
                 0 -> pontuacao = 0
                 15 -> {
                     pontuacao = 0
-                } else -> pontuacao = listaValores[pos]/4
+                }
+                else -> pontuacao = listaValores[pos] / 4
             }
         }
 
-        if ((pos + 1) < listaSelecionadas!!.size && !isGameShow)
-            animateAllViews(escolhido,outro1,outro2,outro3,TxtQuestion,Techniques.FadeOut,1000)
+        if ((pos + 1) < listaPerguntas!!.size && !isGameShow)
+            animateAllViews(escolhido, outro1, outro2, outro3, TxtQuestion, Techniques.FadeOut, 1000)
 
-        if((pos + 1) < listaSelecionadas!!.size && isGameShow)
+        if ((pos + 1) < listaPerguntas!!.size && isGameShow)
             YoYo.with(Techniques.FadeOut)
                     .duration(1000)
                     .playOn(gameLayout)
 
-        if(isGameShow){
+        if (isGameShow) {
             timer.cancel()
         }
 
         Handler().postDelayed({
-            if (isGameShow&&!isCerto){
-                irParaResultados()
-            }else{
-                updateView(pos + 1)
-                if ((pos + 1) < listaSelecionadas!!.size) {
-                    animateAllViews(escolhido,outro1,outro2,outro3,TxtQuestion,Techniques.FadeIn,500)
+            if (isGameShow && !isCerto) {
+                irParaResultados(listaPerguntas)
+            } else {
+                updateView(pos + 1, listaPerguntas)
+                if ((pos + 1) < listaPerguntas!!.size) {
+                    animateAllViews(escolhido, outro1, outro2, outro3, TxtQuestion, Techniques.FadeIn, 500)
                     habilitarBotoes()
                 }
             }
         }, 700)
 
     }
-    
-    fun tratarResultadoCarta(position : Int, valorCarta : Int){
-            val buttoes = Arrays.asList(btnAnswer1,btnAnswer2,btnAnswer3,btnAnswer4)
-            buttoes.shuffle()
-            when (valorCarta){
-                1 -> if(buttoes[0].text!=listaSelecionadas!![position].correctAnswer)
-                    buttoes[0].visibility = View.INVISIBLE
-                else
+
+    fun tratarResultadoCarta(position: Int, valorCarta: Int, listaPerguntas: ArrayList<QuestionParcelable>?) {
+        val buttoes = Arrays.asList(btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4)
+        buttoes.shuffle()
+        when (valorCarta) {
+            1 -> if (buttoes[0].text != listaPerguntas!![position].correctAnswer)
+                buttoes[0].visibility = View.INVISIBLE
+            else
+                buttoes[1].visibility = View.INVISIBLE
+
+            2 -> when (listaPerguntas!![position].correctAnswer) {
+                buttoes[0].text -> {
                     buttoes[1].visibility = View.INVISIBLE
-
-                2 -> when(listaSelecionadas!![position].correctAnswer){
-                    buttoes[0].text -> {
-                        buttoes[1].visibility = View.INVISIBLE
-                        buttoes[2].visibility = View.INVISIBLE
-                    }
-                    buttoes[1].text -> {
-                        buttoes[0].visibility = View.INVISIBLE
-                        buttoes[2].visibility = View.INVISIBLE
-                    }
-                    buttoes[2].text -> {
-                        buttoes[1].visibility = View.INVISIBLE
-                        buttoes[0].visibility = View.INVISIBLE
-                    }
-                    buttoes[3].text -> {
-                        buttoes[1].visibility = View.INVISIBLE
-                        buttoes[2].visibility = View.INVISIBLE
-                    }
+                    buttoes[2].visibility = View.INVISIBLE
                 }
-                3 -> for(btn : Button in buttoes){
-                    if (listaSelecionadas!![position].correctAnswer != btn.text)
-                        btn.visibility = View.INVISIBLE
-
+                buttoes[1].text -> {
+                    buttoes[0].visibility = View.INVISIBLE
+                    buttoes[2].visibility = View.INVISIBLE
                 }
+                buttoes[2].text -> {
+                    buttoes[1].visibility = View.INVISIBLE
+                    buttoes[0].visibility = View.INVISIBLE
+                }
+                buttoes[3].text -> {
+                    buttoes[1].visibility = View.INVISIBLE
+                    buttoes[2].visibility = View.INVISIBLE
+                }
+            }
+            3 -> for (btn: Button in buttoes) {
+                if (listaPerguntas!![position].correctAnswer != btn.text)
+                    btn.visibility = View.INVISIBLE
 
             }
-     }
 
-    private fun updateView(position: Int) {
-        if (position >= listaSelecionadas!!.size) {
-            irParaResultados()
+        }
+    }
+
+    private fun updateView(position: Int, listaPerguntas: ArrayList<QuestionParcelable>?) {
+        if (position >= listaPerguntas!!.size) {
+            irParaResultados(listaPerguntas)
             return
         }
 
         btnDesistir.setOnClickListener {
-            if (position==0)
+            if (position == 0)
                 pontuacao = 500
             else
-                pontuacao = listaValores[position-1]
-            irParaResultados()
+                pontuacao = listaValores[position - 1]
+            irParaResultados(listaPerguntas)
         }
 
         btnTentativaExtra.setOnClickListener {
@@ -237,14 +256,14 @@ class GameFragment : Fragment() {
             btnAjudaCartas.isClickable = false
             btnTentativaExtra.isClickable = false
             btnReferencia.visibility = View.GONE
-            Toast.makeText(context,listaSelecionadas!![position].reference,Toast.LENGTH_LONG).show()
+            Toast.makeText(context, listaPerguntas!![position].reference, Toast.LENGTH_LONG).show()
         }
 
         btnAjudaCartas.setOnClickListener {
             btnReferencia.isClickable = false
             btnTentativaExtra.isClickable = false
             btnAjudaCartas.visibility = View.GONE
-            val listaValores = Arrays.asList(0,1,2,3)
+            val listaValores = Arrays.asList(0, 1, 2, 3)
             listaValores.shuffle()
             val dialogView = Dialog(context!!)
             dialogView.setContentView(R.layout.cartas)
@@ -252,30 +271,30 @@ class GameFragment : Fragment() {
             dialogView.carta1.setOnClickListener {
                 dialogView.carta1.text = listaValores[0].toString()
                 Handler().postDelayed({
-                    tratarResultadoCarta(position,listaValores[0])
+                    tratarResultadoCarta(position, listaValores[0], listaPerguntas)
                     dialogView.dismiss()
-                },1000)
+                }, 1000)
             }
             dialogView.carta2.setOnClickListener {
                 dialogView.carta2.text = listaValores[1].toString()
                 Handler().postDelayed({
-                    tratarResultadoCarta(position,listaValores[1])
+                    tratarResultadoCarta(position, listaValores[1], listaPerguntas)
                     dialogView.dismiss()
-                },1000)
+                }, 1000)
             }
             dialogView.carta3.setOnClickListener {
                 dialogView.carta3.text = listaValores[2].toString()
                 Handler().postDelayed({
-                    tratarResultadoCarta(position,listaValores[2])
+                    tratarResultadoCarta(position, listaValores[2], listaPerguntas)
                     dialogView.dismiss()
-                },1000)
+                }, 1000)
             }
             dialogView.carta4.setOnClickListener {
                 dialogView.carta4.text = listaValores[3].toString()
                 Handler().postDelayed({
-                    tratarResultadoCarta(position,listaValores[3])
+                    tratarResultadoCarta(position, listaValores[3], listaPerguntas)
                     dialogView.dismiss()
-                },1000)
+                }, 1000)
             }
             dialogView.show()
         }
@@ -288,31 +307,32 @@ class GameFragment : Fragment() {
             btnTentativaExtra.isClickable = true
             btnReferencia.isClickable = true
             btnAjudaCartas.isClickable = true
-            when (position){
+            when (position) {
 
-                0 -> txtValoresPerguntas.text = getString(R.string.valor_resultado,listaValores[position],0,0)
+                0 -> txtValoresPerguntas.text = getString(R.string.valor_resultado, listaValores[position], 0, 0)
                 15 -> {
-                    txtValoresPerguntas.text = getString(R.string.valor_resultado,listaValores[position],0,0)
+                    txtValoresPerguntas.text = getString(R.string.valor_resultado, listaValores[position], 0, 0)
                     btnTentativaExtra.visibility = View.GONE
                     btnAjudaCartas.visibility = View.GONE
                     btnReferencia.visibility = View.GONE
                     btnDesistir.visibility = View.GONE
-                } else -> txtValoresPerguntas.text = getString(R.string.valor_resultado,listaValores[position],listaValores[position-1],listaValores[position]/4)
+                }
+                else -> txtValoresPerguntas.text = getString(R.string.valor_resultado, listaValores[position], listaValores[position - 1], listaValores[position] / 4)
             }
-            if (!tentativaExtra){
+            if (!tentativaExtra) {
                 val dialogView = Dialog(context!!, R.style.mydialog)
                 isTempo = true
                 dialogView.setContentView(R.layout.proxima_pergunta)
                 dialogView.setCancelable(false)
-                dialogView.txtValorPergunta.text = getString(R.string.valor_pergunta,listaValores[position])
+                dialogView.txtValorPergunta.text = getString(R.string.valor_pergunta, listaValores[position])
                 YoYo.with(Techniques.FadeIn)
                         .duration(600)
                         .playOn(dialogView.proximaPerguntaView)
-                if(position==15)
+                if (position == 15)
                     dialogView.btnDesistirFinal.visibility = View.VISIBLE
                 dialogView.btnDesistirFinal.setOnClickListener {
-                    pontuacao = listaValores[position-1]
-                    irParaResultados()
+                    pontuacao = listaValores[position - 1]
+                    irParaResultados(listaPerguntas)
                     dialogView.dismiss()
                 }
                 dialogView.btnNextQuestion.setOnClickListener {
@@ -328,17 +348,19 @@ class GameFragment : Fragment() {
                             dialogView.dismiss()
                             timer = object : CountDownTimer(30000, 1000) {
                                 override fun onFinish() {
-                                    when (position){
+                                    when (position) {
                                         0 -> pontuacao = 0
                                         15 -> {
                                             pontuacao = 0
-                                        } else -> pontuacao = listaValores[position]/4
+                                        }
+                                        else -> pontuacao = listaValores[position] / 4
                                     }
-
-                                    irParaResultados()
+                                    irParaResultados(listaPerguntas)
                                 }
+
                                 override fun onTick(p0: Long) {
-                                    txtTimerQuiz.text = (p0/1000).toString()
+                                    tempo = p0/1000
+                                    txtTimerQuiz.text = (p0 / 1000).toString()
                                 }
                             }.start()
                         }, 100)
@@ -350,19 +372,19 @@ class GameFragment : Fragment() {
             }
         }
 
-        if(!tentativaExtra){
+        if (!tentativaExtra) {
 
             btnAnswer1.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.regularAnswer))
             btnAnswer2.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.regularAnswer))
             btnAnswer3.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.regularAnswer))
             btnAnswer4.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.regularAnswer))
 
-            perguntas.add(listaSelecionadas!![position].correctAnswer)
-            perguntas.add(listaSelecionadas!![position].answerB)
-            perguntas.add(listaSelecionadas!![position].answerC)
-            perguntas.add(listaSelecionadas!![position].answerD)
+            perguntas.add(listaPerguntas!![position].correctAnswer)
+            perguntas.add(listaPerguntas!![position].answerB)
+            perguntas.add(listaPerguntas!![position].answerC)
+            perguntas.add(listaPerguntas!![position].answerD)
             perguntas.shuffle()
-            TxtQuestion.text = listaSelecionadas!![position].question
+            TxtQuestion.text = listaPerguntas!![position].question
             TxtQuestionNumber.text = getString(R.string.pergunta, position + 1)
             btnAnswer1.text = perguntas[0]
             btnAnswer2.text = perguntas[1]
@@ -374,18 +396,42 @@ class GameFragment : Fragment() {
 
 
         btnAnswer1.setOnClickListener {
-            definirCertoErrado(btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4, listaSelecionadas!![position].correctAnswer, position)
+            definirCertoErrado(btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4, listaPerguntas!![position].correctAnswer, position, listaPerguntas)
         }
         btnAnswer2.setOnClickListener {
-            definirCertoErrado(btnAnswer2, btnAnswer1, btnAnswer3, btnAnswer4, listaSelecionadas!![position].correctAnswer, position)
+            definirCertoErrado(btnAnswer2, btnAnswer1, btnAnswer3, btnAnswer4, listaPerguntas!![position].correctAnswer, position, listaPerguntas)
         }
         btnAnswer3.setOnClickListener {
-            definirCertoErrado(btnAnswer3, btnAnswer2, btnAnswer1, btnAnswer4, listaSelecionadas!![position].correctAnswer, position)
+            definirCertoErrado(btnAnswer3, btnAnswer2, btnAnswer1, btnAnswer4, listaPerguntas!![position].correctAnswer, position, listaPerguntas)
         }
         btnAnswer4.setOnClickListener {
-            definirCertoErrado(btnAnswer4, btnAnswer2, btnAnswer3, btnAnswer1, listaSelecionadas!![position].correctAnswer, position)
+            definirCertoErrado(btnAnswer4, btnAnswer2, btnAnswer3, btnAnswer1, listaPerguntas!![position].correctAnswer, position, listaPerguntas)
         }
-        tentativaExtra=false
+        tentativaExtra = false
+    }
+
+    fun getCurrentPergunta (perguntas : ArrayList<QuestionParcelable>) : Int {
+        var count = 0
+        for (pergunta : QuestionParcelable in perguntas){
+            if (pergunta.selectedAnswer != ""){
+                count++
+            }
+        }
+        return count
+    }
+
+    override fun onPause() {
+        super.onPause()
+        onResume = true
+        if (isTempo)
+            timer.cancel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (onResume)
+            if (isTempo)
+                setTimer(tempo)
     }
 
     override fun onDestroyView() {
@@ -393,4 +439,26 @@ class GameFragment : Fragment() {
         if (isTempo)
             timer.cancel()
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList("perguntasSalvas", listaSelecionadas)
+        if (isTempo) {
+            outState.putLong("salvarTempo", tempo)
+        }
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+
+        if(savedInstanceState!=null){
+            if (savedInstanceState!!.containsKey("salvarTempo")) {
+                tempo = savedInstanceState.getLong("salvarTempo")
+                setTimer(tempo)
+            }
+            val perguntas = savedInstanceState.getParcelableArrayList<QuestionParcelable>("perguntasSalvas")
+            updateView(getCurrentPergunta(perguntas),perguntas)
+        }
+    }
+
 }

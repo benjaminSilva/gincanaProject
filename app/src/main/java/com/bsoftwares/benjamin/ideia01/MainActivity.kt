@@ -4,16 +4,41 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 //import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.bsoftwares.benjamin.ideia01.Questions.Question
 import com.bsoftwares.benjamin.ideia01.Questions.QuestionModel
 import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
 import com.bsoftwares.benjamin.ideia01.StartActivities.StartFragment
+import com.bsoftwares.benjamin.ideia01.StartActivities.StartGincanaFragment
 import com.bsoftwares.benjamin.ideia01.StartActivities.StartShowGameFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity(), Observer{
+
+
+    val startFragment = StartFragment()
+    val showFragment = StartShowGameFragment()
+    val gincanaFragment = StartGincanaFragment()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+
+
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        QuestionModel.addObserver(this)
+        if(intent.extras!=null){
+            carregandoMain.visibility = View.INVISIBLE
+            var bundle = Bundle()
+            bundle.putParcelableArrayList("Perguntas", intent.extras!!.getParcelableArrayList<QuestionParcelable>("Perguntas"))
+            startFragment.arguments = bundle
+            supportFragmentManager.beginTransaction().replace(R.id.frameMain,startFragment).commit()
+        }
+    }
 
     override fun update(p0: Observable?, p1: Any?) {
         val dataFirabase = QuestionModel.getData()
@@ -66,28 +91,16 @@ class MainActivity : AppCompatActivity(), Observer{
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {
+                val bundle = Bundle()
+                bundle.putParcelableArrayList("Perguntas",lista)
+                gincanaFragment.arguments = bundle
+                supportFragmentManager.beginTransaction().replace(R.id.frameMain,gincanaFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
     }
 
-    val startFragment = StartFragment()
-    val showFragment = StartShowGameFragment()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        QuestionModel.addObserver(this)
-        if(intent.extras!=null){
-            carregandoMain.visibility = View.INVISIBLE
-            var bundle = Bundle()
-            bundle.putParcelableArrayList("Perguntas", intent.extras!!.getParcelableArrayList<QuestionParcelable>("Perguntas"))
-            startFragment.arguments = bundle
-            supportFragmentManager.beginTransaction().replace(R.id.frameMain,startFragment).commit()
-        }
-    }
 
 
 }

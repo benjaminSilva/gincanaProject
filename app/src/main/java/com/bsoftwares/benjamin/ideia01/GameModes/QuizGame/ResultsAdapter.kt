@@ -11,12 +11,6 @@ import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
 import com.bsoftwares.benjamin.ideia01.R
 import kotlinx.android.synthetic.main.resultquizlayout.view.*
 
-
-
-
-
-
-
 class ResultsAdapter(val resultado : ArrayList<QuestionParcelable>, val context: Context) : RecyclerView.Adapter<CustomViewHolder>(){
 
     var mExpandedPosition = -1
