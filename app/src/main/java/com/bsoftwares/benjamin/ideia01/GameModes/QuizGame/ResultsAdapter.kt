@@ -35,8 +35,8 @@ class ResultsAdapter(val resultado : ArrayList<QuestionParcelable>, val context:
         holder.view.txtQuestionNumberResult.text = context.getString(R.string.pergunta,position+1)
         holder.view.txtQuestionResult.text = resultado[position].question
         holder.view.txtQuestionResult.compoundDrawablePadding = 20
-        holder.view.btnSelected.text = resultado[position].selectedAnswer
-        holder.view.btnCorrectAnswer.text = resultado[position].correctAnswer
+        holder.view.btnRespostaSelecionada.text = resultado[position].selectedAnswer
+        holder.view.btnRespostaCorreta.text = resultado[position].correctAnswer
         holder.view.txtReferencia.text = context.getString(R.string.referencia,resultado[position].reference)
         holder.view.hiddenResult.visibility = View.GONE
 
@@ -53,13 +53,13 @@ class ResultsAdapter(val resultado : ArrayList<QuestionParcelable>, val context:
             }
         }
 
-        if(holder.view.btnSelected.text == holder.view.btnCorrectAnswer.text){
-            holder.view.btnCorrectAnswer.visibility = View.INVISIBLE
-            holder.view.btnSelected.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.correctAnswer))
+        if(holder.view.btnRespostaSelecionada.text == holder.view.btnRespostaCorreta.text){
+            holder.view.btnRespostaCorreta.visibility = View.GONE
+            holder.view.btnRespostaSelecionada.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.correctAnswer))
             holder.view.txtQuestionNumberResult.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.ic_thumb_up_black_24dp,0)
         } else{
-            holder.view.btnSelected.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.wrongAnswer))
-            holder.view.btnCorrectAnswer.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.correctAnswer))
+            holder.view.btnRespostaSelecionada.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.wrongAnswer))
+            holder.view.btnRespostaCorreta.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.correctAnswer))
             holder.view.txtQuestionNumberResult.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,R.drawable.ic_thumb_down_black_24dp,0)
         }
     }

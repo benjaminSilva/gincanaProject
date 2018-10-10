@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clResultItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
-    android:id="@+id/clResultItem"
     android:background="@drawable/roundedcorners"
-    android:padding="10sp"
-    android:layout_marginBottom="10sp">
+    android:padding="10sp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/rlOpenView"
@@ -23,19 +21,23 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/txtQuestionNumberResult"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtQuestionNumberResultGincana"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8sp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:drawablePadding="20sp"
+            android:gravity="start"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/txtDificuldadeResults"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/txtDificuldadeResults"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -49,18 +51,19 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/hiddenResult"
+        android:id="@+id/hiddenResultGincana"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:animateLayoutChanges="true"
-        android:visibility="visible"
-        app:layout_goneMarginBottom="50sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rlOpenView">
+        app:layout_constraintTop_toBottomOf="@+id/rlOpenView"
+        app:layout_goneMarginBottom="50sp">
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline4"
@@ -70,19 +73,22 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <TextView
-            android:id="@+id/txtQuestionResult"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtPerguntaGincana"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_marginEnd="8dp"
+            android:gravity="start"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btnRespostaSelecionada"
+            android:id="@+id/timeResultsGincana01"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtQuestionResult"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -91,35 +97,52 @@
             android:padding="10sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtQuestionResult" />
+            app:layout_constraintTop_toBottomOf="@+id/txtPerguntaGincana" />
 
         <Button
-            android:id="@+id/btnRespostaCorreta"
+            android:id="@+id/timeResultsGincana02"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/txtQuestionResult"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/btnanswers"
             android:clickable="false"
             android:padding="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/btnRespostaSelecionada"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toTopOf="@+id/btnRespostaSelecionada" />
+            app:layout_constraintTop_toBottomOf="@+id/txtPerguntaGincana" />
 
-        <TextView
-            android:id="@+id/txtReferencia"
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/timeResultsGincana03"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/btnanswers"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timeResultsGincana01" />
+
+        <Button
+            android:id="@+id/timeResultsGincana04"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/btnanswers"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnRespostaSelecionada" />
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/timeResultsGincana02" />
 
     </android.support.constraint.ConstraintLayout>
 

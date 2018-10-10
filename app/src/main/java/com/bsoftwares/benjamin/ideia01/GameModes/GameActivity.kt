@@ -1,9 +1,11 @@
 package com.bsoftwares.benjamin.ideia01.GameModes
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.bsoftwares.benjamin.ideia01.GameModes.GinganaGame.GincanaTeams
 import com.bsoftwares.benjamin.ideia01.GameModes.QuizGame.GameFragment
 import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
@@ -13,6 +15,7 @@ class GameActivity : AppCompatActivity() {
 
     var gameFragment : Fragment = GameFragment()
     var gincanaTeams : Fragment = GincanaTeams()
+    private var doubleBackToExitPressedOnce = false
     val bundle : Bundle = Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +40,15 @@ class GameActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        this.finish()
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            this.finish()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Clique de novo para sair da partida", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 }

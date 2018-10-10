@@ -2,63 +2,45 @@ package com.bsoftwares.benjamin.ideia01.Questions
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class QuestionParcelable() : Parcelable {
+class QuestionParcelable(var answerB: String, var answerC: String,var answerD: String,var correctAnswer: String,var question: String, var dificulty: String,var id: String, var timesAcertaram: ArrayList<String>, var reference: String, var selectedAnswer: String) : Parcelable {
 
-    lateinit var answerB: String
+    constructor(source: Parcel) : this(
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.readString(),
+            source.createStringArrayList(),
+            source.readString(),
+            source.readString()
+    )
 
-    lateinit var answerC: String
+    override fun describeContents() = 0
 
-    lateinit var answerD: String
-
-    lateinit var correctAnswer: String
-
-    lateinit var question: String
-
-    lateinit var dificulty: String
-
-    lateinit var id: String
-
-    var selectedAnswer = ""
-
-    lateinit var reference: String
-
-    constructor(parcel: Parcel) : this() {
-        answerB = parcel.readString()
-        answerC = parcel.readString()
-        answerD = parcel.readString()
-        correctAnswer = parcel.readString()
-        question = parcel.readString()
-        dificulty = parcel.readString()
-        id = parcel.readString()
-        selectedAnswer = parcel.readString()
-        reference = parcel.readString()
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeString(answerB)
+        writeString(answerC)
+        writeString(answerD)
+        writeString(correctAnswer)
+        writeString(question)
+        writeString(dificulty)
+        writeString(id)
+        writeStringList(timesAcertaram)
+        writeString(reference)
+        writeString(selectedAnswer)
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(answerB)
-        parcel.writeString(answerC)
-        parcel.writeString(answerD)
-        parcel.writeString(correctAnswer)
-        parcel.writeString(question)
-        parcel.writeString(dificulty)
-        parcel.writeString(id)
-        parcel.writeString(selectedAnswer)
-        parcel.writeString(reference)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<QuestionParcelable> {
-        override fun createFromParcel(parcel: Parcel): QuestionParcelable {
-            return QuestionParcelable(parcel)
-        }
-
-        override fun newArray(size: Int): Array<QuestionParcelable?> {
-            return arrayOfNulls(size)
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<QuestionParcelable> = object : Parcelable.Creator<QuestionParcelable> {
+            override fun createFromParcel(source: Parcel): QuestionParcelable = QuestionParcelable(source)
+            override fun newArray(size: Int): Array<QuestionParcelable?> = arrayOfNulls(size)
         }
     }
 }

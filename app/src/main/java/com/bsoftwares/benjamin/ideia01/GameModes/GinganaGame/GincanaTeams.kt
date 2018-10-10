@@ -26,7 +26,6 @@ class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
     val editTexts = ArrayList<EditText>()
     val times = ArrayList<Time>()
     var gincanaScores = GincanaScores()
-    var listaSelecionadas: java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +34,7 @@ class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
         editTexts.add(edtTeam1)
         editTexts.add(edtTeam2)
 
-        rbApenasUmTime.isChecked = true
+        rbTodosTimes.isChecked = true
 
         sbKids.setOnSeekBarChangeListener(this)
         sbFacil.setOnSeekBarChangeListener(this)
@@ -54,20 +53,13 @@ class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
         tvMedioPoints.text = 75.toString()
         tvDificilPoints.text = 100.toString()
 
-        btnNextGincanaRules.setOnClickListener {
-            if(areAllNamesOk()){
-                val bundle = Bundle()
-                bundle.putParcelableArray("Perguntas",arguments!!.getParcelableArray("Perguntas"))
-            }
-        }
-
         btnAdicionarTime3.setOnClickListener {
-            if(btnAdicionarTime3.text == "+"){
+            if (btnAdicionarTime3.text == "+") {
                 editTexts.add(edtTeam3)
                 edtTeam3.visibility = View.VISIBLE
                 btnAdicionarTime4.visibility = View.VISIBLE
                 btnAdicionarTime3.text = "-"
-            }else{
+            } else {
                 editTexts.remove(edtTeam3)
                 if (editTexts.contains(edtTeam4))
                     editTexts.remove(edtTeam4)
@@ -79,11 +71,11 @@ class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
             }
         }
         btnAdicionarTime4.setOnClickListener {
-            if (btnAdicionarTime4.text == "+"){
+            if (btnAdicionarTime4.text == "+") {
                 editTexts.add(edtTeam4)
                 edtTeam4.visibility = View.VISIBLE
                 btnAdicionarTime4.text = "-"
-            }else{
+            } else {
                 editTexts.remove(edtTeam4)
                 edtTeam4.visibility = View.GONE
                 btnAdicionarTime4.text = "+"
@@ -91,35 +83,37 @@ class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
         }
 
         btnNextGincanaRules.setOnClickListener {
-            val pontos = ArrayList<Int>()
-            var todosRespondem = true
-            if (rbApenasUmTime.isChecked)
-                todosRespondem = false
-            pontos.add(sbKids.progress*5)
-            pontos.add(sbFacil.progress*5)
-            pontos.add(sbMedio.progress*5)
-            pontos.add(sbDificil.progress*5)
-            var bundle = Bundle()
-            bundle.putIntegerArrayList("Pontos",pontos)
-            bundle.putBoolean("umOuTodos",todosRespondem)
-            bundle.putParcelableArrayList("Times",times)
-            bundle.putParcelableArrayList("PerguntasSelecionadas",arguments!!.getParcelableArrayList("PerguntasSelecionadas"))
-            activity!!.supportFragmentManager.beginTransaction().replace(R.id.frameGame, gincanaScores,"GameGincanaScores").commit()
+            if (areAllNamesOk()) {
+                val pontos = ArrayList<Int>()
+                var todosRespondem = true
+                if (rbApenasUmTime.isChecked)
+                    todosRespondem = false
+                pontos.add(sbKids.progress * 5)
+                pontos.add(sbFacil.progress * 5)
+                pontos.add(sbMedio.progress * 5)
+                pontos.add(sbDificil.progress * 5)
+                var bundle = Bundle()
+                bundle.putIntegerArrayList("Pontos", pontos)
+                bundle.putBoolean("umOuTodos", todosRespondem)
+                bundle.putParcelableArrayList("Times", times)
+                bundle.putParcelableArrayList("PerguntasSelecionadas", arguments!!.getParcelableArrayList("PerguntasSelecionadas"))
+                gincanaScores.arguments = bundle
+                activity!!.supportFragmentManager.beginTransaction().replace(R.id.frameGame, gincanaScores, "GameGincanaScores").commit()
+            }
         }
+
 
     }
 
-    private fun areAllNamesOk() : Boolean {
-        for (editText : EditText in editTexts){
-            if (editText.text.toString() != ""){
+    private fun areAllNamesOk(): Boolean {
+        for (editText: EditText in editTexts) {
+            if (editText.text.toString() != "") {
                 var time = Time()
                 time.nome = editText.text.toString()
-                time.perguntas = java.util.ArrayList()
                 times.add(time)
-            }
-            else{
+            } else {
                 times.clear()
-                Toast.makeText(context,"Crie o nome dos times",Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Crie o nome dos times", Toast.LENGTH_LONG).show()
                 return false
             }
         }
@@ -129,12 +123,12 @@ class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, p2: Boolean) {
         var nVezesCinco = progress * 5
-        if (progress<1){
+        if (progress < 1) {
             seekBar!!.progress = 1
             return
         }
 
-        when (seekBar){
+        when (seekBar) {
             sbKids -> {
                 tvKidsPoints.text = nVezesCinco.toString()
             }

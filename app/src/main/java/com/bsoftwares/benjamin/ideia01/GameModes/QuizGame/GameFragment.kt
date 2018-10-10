@@ -2,6 +2,7 @@ package com.bsoftwares.benjamin.ideia01.GameModes.QuizGame
 
 
 import android.app.Dialog
+import android.app.NotificationChannel
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -26,6 +27,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class GameFragment : Fragment() {
 
 
@@ -92,6 +94,7 @@ class GameFragment : Fragment() {
         btnAnswer2.isClickable = false
         btnAnswer3.isClickable = false
         btnAnswer4.isClickable = false
+        btnDesistir.isClickable = false
     }
 
     fun habilitarBotoes() {
@@ -99,6 +102,7 @@ class GameFragment : Fragment() {
         btnAnswer2.isClickable = true
         btnAnswer3.isClickable = true
         btnAnswer4.isClickable = true
+        btnDesistir.isClickable = true
     }
 
     fun animateAllViews(escolhido: Button, outro1: Button, outro2: Button, outro3: Button, pergunta: TextView, animation: Techniques, duration: Long) {
@@ -144,7 +148,8 @@ class GameFragment : Fragment() {
         var isCerto = false
         if (escolhido.text == resposta) {
             isCerto = true
-            pontuacao = listaValores[pos]
+            if (isGameShow)
+                pontuacao = listaValores[pos]
             if (tentativaExtra)
                 tentativaExtra = false
             escolhido.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.correctAnswer))
@@ -161,19 +166,22 @@ class GameFragment : Fragment() {
                 updateView(pos, listaPerguntas)
                 return
             }
-            when (pos) {
-                0 -> pontuacao = 0
-                15 -> {
-                    pontuacao = 0
+            if(isGameShow){
+                when (pos) {
+                    0 -> pontuacao = 0
+                    15 -> {
+                        pontuacao = 0
+                    }
+                    else -> pontuacao = listaValores[pos] / 4
                 }
-                else -> pontuacao = listaValores[pos] / 4
             }
+
         }
 
-        if ((pos + 1) < listaPerguntas!!.size && !isGameShow)
+        if ((pos + 1) < listaPerguntas.size && !isGameShow)
             animateAllViews(escolhido, outro1, outro2, outro3, TxtQuestion, Techniques.FadeOut, 1000)
 
-        if ((pos + 1) < listaPerguntas!!.size && isGameShow)
+        if ((pos + 1) < listaPerguntas.size && isGameShow)
             YoYo.with(Techniques.FadeOut)
                     .duration(1000)
                     .playOn(gameLayout)
@@ -187,7 +195,7 @@ class GameFragment : Fragment() {
                 irParaResultados(listaPerguntas)
             } else {
                 updateView(pos + 1, listaPerguntas)
-                if ((pos + 1) < listaPerguntas!!.size) {
+                if ((pos + 1) < listaPerguntas.size) {
                     animateAllViews(escolhido, outro1, outro2, outro3, TxtQuestion, Techniques.FadeIn, 500)
                     habilitarBotoes()
                 }
@@ -256,10 +264,10 @@ class GameFragment : Fragment() {
             btnAjudaCartas.isClickable = false
             btnTentativaExtra.isClickable = false
             btnReferencia.visibility = View.GONE
-            Toast.makeText(context, listaPerguntas!![position].reference, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, listaPerguntas[position].reference, Toast.LENGTH_LONG).show()
         }
 
-        btnAjudaCartas.setOnClickListener {
+        btnAjudaCartas.setOnClickListener { it ->
             btnReferencia.isClickable = false
             btnTentativaExtra.isClickable = false
             btnAjudaCartas.visibility = View.GONE
@@ -379,12 +387,12 @@ class GameFragment : Fragment() {
             btnAnswer3.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.regularAnswer))
             btnAnswer4.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.regularAnswer))
 
-            perguntas.add(listaPerguntas!![position].correctAnswer)
-            perguntas.add(listaPerguntas!![position].answerB)
-            perguntas.add(listaPerguntas!![position].answerC)
-            perguntas.add(listaPerguntas!![position].answerD)
+            perguntas.add(listaPerguntas[position].correctAnswer)
+            perguntas.add(listaPerguntas[position].answerB)
+            perguntas.add(listaPerguntas[position].answerC)
+            perguntas.add(listaPerguntas[position].answerD)
             perguntas.shuffle()
-            TxtQuestion.text = listaPerguntas!![position].question
+            TxtQuestion.text = listaPerguntas[position].question
             TxtQuestionNumber.text = getString(R.string.pergunta, position + 1)
             btnAnswer1.text = perguntas[0]
             btnAnswer2.text = perguntas[1]
@@ -396,16 +404,16 @@ class GameFragment : Fragment() {
 
 
         btnAnswer1.setOnClickListener {
-            definirCertoErrado(btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4, listaPerguntas!![position].correctAnswer, position, listaPerguntas)
+            definirCertoErrado(btnAnswer1, btnAnswer2, btnAnswer3, btnAnswer4, listaPerguntas[position].correctAnswer, position, listaPerguntas)
         }
         btnAnswer2.setOnClickListener {
-            definirCertoErrado(btnAnswer2, btnAnswer1, btnAnswer3, btnAnswer4, listaPerguntas!![position].correctAnswer, position, listaPerguntas)
+            definirCertoErrado(btnAnswer2, btnAnswer1, btnAnswer3, btnAnswer4, listaPerguntas[position].correctAnswer, position, listaPerguntas)
         }
         btnAnswer3.setOnClickListener {
-            definirCertoErrado(btnAnswer3, btnAnswer2, btnAnswer1, btnAnswer4, listaPerguntas!![position].correctAnswer, position, listaPerguntas)
+            definirCertoErrado(btnAnswer3, btnAnswer2, btnAnswer1, btnAnswer4, listaPerguntas[position].correctAnswer, position, listaPerguntas)
         }
         btnAnswer4.setOnClickListener {
-            definirCertoErrado(btnAnswer4, btnAnswer2, btnAnswer3, btnAnswer1, listaPerguntas!![position].correctAnswer, position, listaPerguntas)
+            definirCertoErrado(btnAnswer4, btnAnswer2, btnAnswer3, btnAnswer1, listaPerguntas[position].correctAnswer, position, listaPerguntas)
         }
         tentativaExtra = false
     }
@@ -452,7 +460,7 @@ class GameFragment : Fragment() {
         super.onViewStateRestored(savedInstanceState)
 
         if(savedInstanceState!=null){
-            if (savedInstanceState!!.containsKey("salvarTempo")) {
+            if (savedInstanceState.containsKey("salvarTempo")) {
                 tempo = savedInstanceState.getLong("salvarTempo")
                 setTimer(tempo)
             }

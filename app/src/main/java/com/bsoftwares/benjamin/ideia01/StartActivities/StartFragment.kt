@@ -3,7 +3,6 @@ package com.bsoftwares.benjamin.ideia01.StartActivities
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -21,12 +20,7 @@ import kotlinx.android.synthetic.main.rules.view.*
 import android.widget.SeekBar.OnSeekBarChangeListener
 import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
 import com.bsoftwares.benjamin.ideia01.R
-import android.R.id.edit
-import android.content.SharedPreferences
-import android.content.Context.MODE_PRIVATE
-import com.google.android.gms.flags.impl.SharedPreferencesFactory.getSharedPreferences
-import com.bsoftwares.benjamin.ideia01.MainActivity
-
+import android.annotation.SuppressLint
 
 
 
@@ -45,13 +39,7 @@ class StartFragment : Fragment(){
     var listaF : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     var listaM : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     var checkCounter = 0
-    val TESTE = "TESTE"
-    val PRIMEIRO = "Primeiro"
-    val SEGUNDO = "Segundo"
-    val TERCEIRO = "Terceiro"
-    val QUARTO = "Quarto"
-    val QUINTO = "Quinto"
-    //var isTempo = false
+
 
     fun separarPerguntas(){
         for (pergunta : QuestionParcelable in listaDePerguntas!!){
@@ -81,6 +69,7 @@ class StartFragment : Fragment(){
         return total
     }
 
+    @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)!!
@@ -187,6 +176,7 @@ class StartFragment : Fragment(){
             }
             dialogView.txtProgress.text = getString(R.string.nquestoes,sharedPref.getInt("progressoNperguntas",5),getMax(dialogView))
 
+
             val yourSeekBarListener = object : OnSeekBarChangeListener {
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
 
@@ -237,8 +227,13 @@ class StartFragment : Fragment(){
             }
             builder.setView(dialogView)
             val regras = builder.create()
+
             regras.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             regras.show()
+
+            dialogView.btnOkRules.setOnClickListener {
+                regras.dismiss()
+            }
         }
     }
 

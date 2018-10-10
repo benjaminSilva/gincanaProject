@@ -15,6 +15,7 @@ import com.bsoftwares.benjamin.ideia01.StartActivities.StartGincanaFragment
 import com.bsoftwares.benjamin.ideia01.StartActivities.StartShowGameFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), Observer{
 
@@ -59,15 +60,7 @@ class MainActivity : AppCompatActivity(), Observer{
 
     private fun criarParcelable() {
         for ( question : Question in data!!){
-            val questionParcelable = QuestionParcelable()
-            questionParcelable.answerB = question.answerB
-            questionParcelable.answerC = question.answerC
-            questionParcelable.answerD = question.answerD
-            questionParcelable.question = question.question
-            questionParcelable.reference = question.reference
-            questionParcelable.id = question.id
-            questionParcelable.dificulty = question.dificulty
-            questionParcelable.correctAnswer = question.correctAnswer
+            val questionParcelable = QuestionParcelable(question.answerB,question.answerC,question.answerD, question.correctAnswer,question.question, question.dificulty,question.id, ArrayList(), question.reference, "")
             lista.add(questionParcelable)
         }
 

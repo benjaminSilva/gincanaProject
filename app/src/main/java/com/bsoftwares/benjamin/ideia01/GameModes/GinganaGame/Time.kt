@@ -8,19 +8,16 @@ import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
 class Time () : Parcelable{
 
     lateinit var nome : String
-    lateinit var perguntas : java.util.ArrayList<Any>
     var pontuacao : Int = 0
 
     constructor(parcel: Parcel) : this() {
         nome = parcel.readString()
-        perguntas = parcel.readArrayList(null)
         pontuacao = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(nome)
         parcel.writeInt(pontuacao)
-        parcel.writeList(perguntas)
     }
 
     override fun describeContents(): Int {

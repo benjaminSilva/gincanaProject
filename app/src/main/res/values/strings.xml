@@ -14,12 +14,15 @@
     <string name="referencia">Referência: %1$s</string>
     <string name="resultado">Resultado</string>
     <string name="voltar">Voltar</string>
-    <string name="regras">Regras</string>
+    <string name="Regras">Regras</string>
+
+    //Dificuldades
     <string name="dificuldade">Dificuldade</string>
     <string name="kids">Kids</string>
     <string name="f_cil">Fácil</string>
     <string name="m_dio">Médio</string>
     <string name="dif_cil">Difícil</string>
+
     <string name="quantidade_de_quest_es">Quantidade de questões</string>
     <string name="tempo_5_segundos_por_quest_o">Tempo (10 Segundos por questão)</string>
     <string name="ajuda_as_cartas">Ajuda as cartas</string>
@@ -31,13 +34,32 @@
     <string name="resultado_final_game_show">Você ganhou R$%1$d</string>
     <string name="modo_gincana">Modo Gincana</string>
     <string name="crie_at_4_times_para_competir_entre_si">Crie até 4 times para competir entre si</string>
-    <string name="time_1">Time 1</string>
-    <string name="time_2">Time 2</string>
+
     <string name="mais">+</string>
     <string name="a_mesma_pergunta_vai_para_todos_os_participantes">A mesma pergunta vai para todos os times participantes</string>
     <string name="uma_pergunta_para_cada_participante">Uma pergunta para cada time participante</string>
     <string name="adicione_o_nome_dos_times">Adicione o nome dos times</string>
     <string name="continuar">Continuar</string>
+    <string name="nRodada">Rodada %1$d</string>
+
+    //Times
+    <string name="time_1">Time 1</string>
+    <string name="time_2">Time 2</string>
     <string name="time_4">Time 4</string>
     <string name="time_3">Time 3</string>
+
+    //Pontuacao
+    <string name="pontuacaoTime">%1$s\n%2$d Pontos</string>
+    <string name="ok">OK</string>
+    <string name="refer_ncia">Referência</string>
+    <string name="ningu_m_acertou">Ninguém acertou</string>
+    <string name="teste_suas_habilidades_criando_as_suas_regras">Teste suas habilidades criando as suas regras</string>
+    <string name="free_play">Free Play</string>
+    <string name="pr_xima_pergunta">Próxima Pergunta</string>
+    <string name="resultado_parcial">Resultado Parcial</string>
+    <string name="confirmacao">Confirmação</string>
+    <string name="desistir">Desistir</string>
+    <string name="confirmarTime">Confirma o(s) time(s)?</string>
+    <string name="opcaoX">%1$s) %2$s</string>
+    <string name="resultados">Resultados</string>
 </resources>

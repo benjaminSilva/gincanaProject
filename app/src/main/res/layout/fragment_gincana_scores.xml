@@ -14,7 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        android:text="Confirma"
+        android:text="@string/pr_xima_pergunta"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -22,9 +22,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/btnGincanaScoresNext"
@@ -45,7 +43,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Resultado Parcial"
+                android:text="@string/resultado_parcial"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rgPontuacoes"/>
@@ -63,27 +61,28 @@
 
                 <TextView
                     android:id="@+id/txtKidsPoints"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center" />
 
                 <TextView
                     android:id="@+id/txtFacilPoints"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center" />
 
                 <TextView
                     android:id="@+id/txtMedioPoints"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:layout_weight="1" />
 
                 <TextView
                     android:id="@+id/txtDificilPoints"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center" />
@@ -101,7 +100,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvResultadoAtual"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -126,38 +125,46 @@
                 app:layout_constraintStart_toStartOf="parent">
 
                 <RadioButton
+                    android:layout_gravity="center"
                     android:id="@+id/rbTeam01"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:background="@drawable/checkboxselector"
                     android:button="@android:color/transparent"
                     android:padding="10dp" />
 
                 <RadioButton
+                    android:layout_gravity="center"
                     android:id="@+id/rbTeam02"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:background="@drawable/checkboxselector"
                     android:button="@android:color/transparent"
                     android:padding="10dp" />
 
                 <RadioButton
+                    android:layout_gravity="center"
                     android:id="@+id/rbTeam03"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:background="@drawable/checkboxselector"
                     android:button="@android:color/transparent"
                     android:padding="10dp"
                     android:visibility="gone" />
 
                 <RadioButton
+                    android:layout_gravity="center"
                     android:id="@+id/rbTeam04"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:background="@drawable/checkboxselector"
                     android:button="@android:color/transparent"
                     android:padding="10dp"
@@ -179,7 +186,7 @@
 
                 <RadioButton
                     android:id="@+id/rbPerguntaKids"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/checkboxselector"
@@ -191,7 +198,7 @@
 
                 <RadioButton
                     android:id="@+id/rbPerguntaFacil"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/checkboxselector"
@@ -202,7 +209,7 @@
 
                 <RadioButton
                     android:id="@+id/rbPerguntaMedia"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/checkboxselector"
@@ -213,7 +220,7 @@
 
                 <RadioButton
                     android:id="@+id/rbPerguntaDificil"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/checkboxselector"
@@ -226,19 +233,19 @@
             <RadioGroup
                 android:id="@+id/rgTeamPoints"
                 android:layout_width="0dp"
-                android:layout_height="17dp"
-                android:layout_marginStart="8dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:background="@color/unselected"
                 app:layout_constraintTop_toBottomOf="@+id/txtResultadoParcial">
 
                 <TextView
                     android:id="@+id/txtTeam01Points"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -247,8 +254,9 @@
 
                 <TextView
                     android:id="@+id/txtTeam02Points"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -257,8 +265,9 @@
 
                 <TextView
                     android:id="@+id/txtTeam03Points"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -268,8 +277,9 @@
 
                 <TextView
                     android:id="@+id/txtTeam04Points"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_weight="1"
