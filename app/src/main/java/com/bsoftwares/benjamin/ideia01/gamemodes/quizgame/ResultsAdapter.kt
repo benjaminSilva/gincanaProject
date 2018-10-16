@@ -1,4 +1,4 @@
-package com.bsoftwares.benjamin.ideia01.GameModes.QuizGame
+package com.bsoftwares.benjamin.ideia01.gamemodes.quizgame
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
+import com.bsoftwares.benjamin.ideia01.questions.QuestionParcelable
 import com.bsoftwares.benjamin.ideia01.R
 import kotlinx.android.synthetic.main.resultquizlayout.view.*
 

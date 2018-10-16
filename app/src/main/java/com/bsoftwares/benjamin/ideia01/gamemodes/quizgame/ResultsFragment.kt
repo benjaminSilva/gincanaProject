@@ -1,4 +1,4 @@
-package com.bsoftwares.benjamin.ideia01.GameModes.QuizGame
+package com.bsoftwares.benjamin.ideia01.gamemodes.quizgame
 
 
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
+import com.bsoftwares.benjamin.ideia01.questions.QuestionParcelable
 
 import com.bsoftwares.benjamin.ideia01.R
 import com.daimajia.androidanimations.library.Techniques

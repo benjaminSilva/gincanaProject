@@ -1,14 +1,13 @@
-package com.bsoftwares.benjamin.ideia01.GameModes
+package com.bsoftwares.benjamin.ideia01.gamemodes
 
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.bsoftwares.benjamin.ideia01.GameModes.GinganaGame.GincanaTeams
-import com.bsoftwares.benjamin.ideia01.GameModes.QuizGame.GameFragment
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
+import com.bsoftwares.benjamin.ideia01.gamemodes.gincanagame.GincanaTeams
+import com.bsoftwares.benjamin.ideia01.gamemodes.quizgame.GameFragment
+import com.bsoftwares.benjamin.ideia01.questions.QuestionParcelable
 import com.bsoftwares.benjamin.ideia01.R
 
 class GameActivity : AppCompatActivity() {

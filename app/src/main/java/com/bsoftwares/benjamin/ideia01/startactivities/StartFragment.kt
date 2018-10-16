@@ -1,4 +1,4 @@
-package com.bsoftwares.benjamin.ideia01.StartActivities
+package com.bsoftwares.benjamin.ideia01.startactivities
 
 
 import android.app.AlertDialog
@@ -14,14 +14,13 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.SeekBar
 import android.widget.Toast
-import com.bsoftwares.benjamin.ideia01.GameModes.GameActivity
+import com.bsoftwares.benjamin.ideia01.gamemodes.GameActivity
 import kotlinx.android.synthetic.main.fragment_start.*
 import kotlinx.android.synthetic.main.rules.view.*
 import android.widget.SeekBar.OnSeekBarChangeListener
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
+import com.bsoftwares.benjamin.ideia01.questions.QuestionParcelable
 import com.bsoftwares.benjamin.ideia01.R
 import android.annotation.SuppressLint
-
 
 
 class StartFragment : Fragment(){
@@ -78,31 +77,6 @@ class StartFragment : Fragment(){
         }
         if (listaK!!.isEmpty())
             separarPerguntas()
-
-
-        /*val alerta: AlertDialog.Builder
-        alerta = AlertDialog.Builder(activity)
-        alerta.setTitle("Aviso")
-        alerta.setIcon(R.mipmap.ic_launcher)
-                .setMessage("ATEN��O: Aplicatico com funcionalidade limitada!!!")
-                .setPositiveButton("OK") { dialogInterface, i ->
-                    val editor = sharedPref.edit()
-                    if (sharedPref.contains(TESTE)){
-                        var inteiro = sharedPref.getInt(TESTE,0)
-                        if (sharedPref.getInt(TESTE,0)<5){
-                            editor.putInt(TESTE,inteiro+1).apply()
-                        }else{
-                            activity!!.finishAndRemoveTask()
-                        }
-                    } else{
-                        editor.putInt(TESTE,0).apply()
-                    }
-                }
-
-        val alertDialog = alerta.create()
-        alertDialog.show()*/
-
-
 
         BtnStart.setOnClickListener {
             var listaPerguntasSelecionadas : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
@@ -165,18 +139,16 @@ class StartFragment : Fragment(){
                     checkCounter++
                 }
                 dialogView.cbTempo.isChecked = sharedPref.getBoolean("tempoParaPergunta",false)
-                dialogView.sbNquestoes.progress = sharedPref.getInt("progressoNperguntas",5)
+                progresso = sharedPref.getInt("progressoNperguntas",5)
             } else{
                 dialogView.btnKids.isChecked = true
                 dialogView.btnFacil.isChecked = true
                 dialogView.btnMedio.isChecked = true
                 dialogView.btnDificil.isChecked = true
-                nMaxQuestoes = listaDePerguntas!!.size
+                nMaxQuestoes = getMax(dialogView)
                 checkCounter = 4
             }
             dialogView.txtProgress.text = getString(R.string.nquestoes,sharedPref.getInt("progressoNperguntas",5),getMax(dialogView))
-
-
             val yourSeekBarListener = object : OnSeekBarChangeListener {
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
 
@@ -198,7 +170,9 @@ class StartFragment : Fragment(){
 
                 }
             }
+
             dialogView.sbNquestoes.max = nMaxQuestoes
+            dialogView.sbNquestoes.progress = progresso
             dialogView.sbNquestoes.setOnSeekBarChangeListener(yourSeekBarListener)
 
             val builder = AlertDialog.Builder(context)

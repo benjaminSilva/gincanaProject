@@ -1,4 +1,4 @@
-package com.bsoftwares.benjamin.ideia01.StartActivities
+package com.bsoftwares.benjamin.ideia01.startactivities
 
 
 import android.content.Intent
@@ -7,8 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bsoftwares.benjamin.ideia01.GameModes.GameActivity
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
+import com.bsoftwares.benjamin.ideia01.gamemodes.GameActivity
+import com.bsoftwares.benjamin.ideia01.questions.QuestionParcelable
 
 import com.bsoftwares.benjamin.ideia01.R
 import kotlinx.android.synthetic.main.fragment_start_gincana.*

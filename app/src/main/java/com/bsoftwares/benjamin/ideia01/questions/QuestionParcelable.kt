@@ -1,8 +1,7 @@
-package com.bsoftwares.benjamin.ideia01.Questions
+package com.bsoftwares.benjamin.ideia01.questions
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.util.*
 import kotlin.collections.ArrayList
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")

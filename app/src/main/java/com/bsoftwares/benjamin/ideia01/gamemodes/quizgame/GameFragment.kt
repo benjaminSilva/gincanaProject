@@ -1,8 +1,7 @@
-package com.bsoftwares.benjamin.ideia01.GameModes.QuizGame
+package com.bsoftwares.benjamin.ideia01.gamemodes.quizgame
 
 
 import android.app.Dialog
-import android.app.NotificationChannel
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -17,7 +16,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.bsoftwares.benjamin.ideia01.*
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
+import com.bsoftwares.benjamin.ideia01.questions.QuestionParcelable
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import kotlinx.android.synthetic.main.cartas.*
@@ -382,10 +381,10 @@ class GameFragment : Fragment() {
 
         if (!tentativaExtra) {
 
-            btnAnswer1.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.regularAnswer))
-            btnAnswer2.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.regularAnswer))
-            btnAnswer3.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.regularAnswer))
-            btnAnswer4.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.regularAnswer))
+            btnAnswer1.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.white))
+            btnAnswer2.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.white))
+            btnAnswer3.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.white))
+            btnAnswer4.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.white))
 
             perguntas.add(listaPerguntas[position].correctAnswer)
             perguntas.add(listaPerguntas[position].answerB)

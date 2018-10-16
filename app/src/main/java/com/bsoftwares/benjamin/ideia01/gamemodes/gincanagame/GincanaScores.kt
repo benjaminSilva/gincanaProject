@@ -1,4 +1,4 @@
-package com.bsoftwares.benjamin.ideia01.GameModes.GinganaGame
+package com.bsoftwares.benjamin.ideia01.gamemodes.gincanagame
 
 
 import android.app.AlertDialog
@@ -11,17 +11,13 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
+import com.bsoftwares.benjamin.ideia01.questions.QuestionParcelable
 
 import com.bsoftwares.benjamin.ideia01.R
 import kotlinx.android.synthetic.main.fragment_gincana_scores.*
-import android.content.DialogInterface
-import android.opengl.Visibility
 import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.CheckBox
-import com.bsoftwares.benjamin.ideia01.GameModes.QuizGame.ResultsAdapter
-import kotlinx.android.synthetic.main.fragment_results.*
+import android.view.ViewTreeObserver
 import kotlinx.android.synthetic.main.pergunta_gincana.*
 import java.util.*
 
@@ -35,7 +31,7 @@ class GincanaScores : Fragment() {
         return inflater.inflate(R.layout.fragment_gincana_scores, container, false)
     }
 
-    private var todosRespondem = false
+    var todosRespondem = false
     private var times : java.util.ArrayList<Time>? = java.util.ArrayList()
     private var listaDePerguntas : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     private var pKids : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
@@ -45,7 +41,7 @@ class GincanaScores : Fragment() {
     private var pRespondidas : java.util.ArrayList<QuestionParcelable>? = java.util.ArrayList()
     private var txtViews : ArrayList<TextView> = ArrayList()
     private var rbViews : ArrayList<RadioButton> = ArrayList()
-    private var pontos : java.util.ArrayList<Int>? = java.util.ArrayList()
+    var pontos : java.util.ArrayList<Int>? = java.util.ArrayList()
     private var position = 1
     private var atualDificuldade = ""
     private var atualTime = ""
@@ -82,6 +78,7 @@ class GincanaScores : Fragment() {
         separarPerguntas()
 
         for (i in 0.. times!!.size-1){
+            txtViews[i].text = getString(R.string.pontuacaoTime,times!![i].nome,times!![i].pontuacao)
             if(i>2){
                 txtTeam04Points.visibility = View.VISIBLE
                 rbTeam04.visibility = View.VISIBLE
@@ -113,6 +110,7 @@ class GincanaScores : Fragment() {
                     val rbSelecionadoTime = rgTimesButtons.getChildAt(posicaoRbSelecionadoTime) as RadioButton
                     atualTime = rbSelecionadoTime.text.toString()
                     alertDialog.setMessage("Você confirma a pergunta de\nDificuldade: " + atualDificuldade + "\nPara o time: " + atualTime)
+                    rgPerguntasTipos.clearCheck()
                     rgTimesButtons.clearCheck()
                 }
                 alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK") { dialog, which -> gerarPergunta() }
@@ -281,13 +279,24 @@ class GincanaScores : Fragment() {
         pDificil!!.shuffle()
     }
 
-    private fun updateView(rodada : Int) {
+    fun updateView(rodada : Int) {
         for (i in 0.. times!!.size-1){
-            txtViews[i].text = getString(R.string.pontuacaoTime,times!![i].nome,times!![i].pontuacao)
+            times!![i].pontuacao = 0
+            if (pRespondidas!!.isEmpty())
+                txtViews[i].text = getString(R.string.pontuacaoTime,times!![i].nome,times!![i].pontuacao)
         }
         if(!pRespondidas!!.isEmpty()){
             rvResultadoAtual.layoutManager = LinearLayoutManager(context)
-            rvResultadoAtual.adapter = GincanaResultsAdapter(pRespondidas!!,context!!,times,todosRespondem)
+            rvResultadoAtual.adapter = GincanaResultsAdapter(pRespondidas!!,times!!,this)
+            rvResultadoAtual.getViewTreeObserver()
+                    .addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                        override fun onGlobalLayout() {
+                            for (i in 0.. times!!.size-1){
+                                txtViews[i].text = getString(R.string.pontuacaoTime,times!![i].nome,times!![i].pontuacao)
+                            }
+                            rvResultadoAtual.getViewTreeObserver().removeOnGlobalLayoutListener(this)
+                        }
+                    })
         }
         txtNrodada.text = getString(R.string.nRodada,rodada)
         if (pKids!!.isEmpty())

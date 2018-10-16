@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/regularAnswer"
-    tools:context=".GameModes.QuizGame.ResultsFragment"
+    android:background="@drawable/gradient_orange"
+    tools:context=".gamemodes.quizgame.ResultsFragment"
     android:id="@+id/clResults">
 
 
@@ -17,6 +17,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/resultado"
+        android:textColor="@color/white"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,6 +31,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textSize="36sp"
+        android:textColor="@color/white"
+        android:alpha="0.8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -54,6 +57,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/voltar"
+        android:background="@drawable/btn_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

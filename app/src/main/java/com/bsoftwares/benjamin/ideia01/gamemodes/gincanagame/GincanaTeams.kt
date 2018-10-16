@@ -1,4 +1,4 @@
-package com.bsoftwares.benjamin.ideia01.GameModes.GinganaGame
+package com.bsoftwares.benjamin.ideia01.gamemodes.gincanagame
 
 
 import android.os.Bundle
@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Toast
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
 
 import com.bsoftwares.benjamin.ideia01.R
 import kotlinx.android.synthetic.main.fragment_gincana_teams.*
@@ -44,14 +43,14 @@ class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
         sbFacil.max = 20
         sbMedio.max = 20
         sbDificil.max = 20
-        sbKids.progress = 5
-        sbFacil.progress = 10
-        sbMedio.progress = 15
-        sbDificil.progress = 20
-        tvKidsPoints.text = 25.toString()
-        tvFacilPoints.text = 50.toString()
-        tvMedioPoints.text = 75.toString()
-        tvDificilPoints.text = 100.toString()
+        sbKids.progress = 3
+        sbFacil.progress = 4
+        sbMedio.progress = 7
+        sbDificil.progress = 10
+        tvKidsPoints.text = 15.toString()
+        tvFacilPoints.text = 20.toString()
+        tvMedioPoints.text = 35.toString()
+        tvDificilPoints.text = 50.toString()
 
         btnAdicionarTime3.setOnClickListener {
             if (btnAdicionarTime3.text == "+") {

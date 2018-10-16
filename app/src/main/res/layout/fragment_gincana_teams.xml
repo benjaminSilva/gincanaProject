@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameModes.GinganaGame.GincanaTeams">
+    tools:context=".gamemodes.gincanagame.GincanaTeams">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,10 +26,12 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:drawableTint="@color/colorPrimary"
                 android:ems="10"
                 android:hint="@string/time_1"
-                android:maxLength="10"
                 android:inputType="textPersonName"
+                android:maxLength="10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtAdicionarNomeTimes"
@@ -54,10 +56,12 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:drawableTint="@color/colorPrimary"
                 android:ems="10"
-                android:maxLength="10"
                 android:hint="@string/time_2"
                 android:inputType="textPersonName"
+                android:maxLength="10"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtTeam1"
@@ -69,7 +73,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:background="@drawable/btn_orange"
                 android:text="@string/mais"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/edtTeam3"
                 app:layout_constraintTop_toBottomOf="@+id/edtTeam2" />
@@ -79,12 +85,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:background="@drawable/btn_orange"
                 android:text="@string/mais"
+                android:textColor="@color/white"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/btnAdicionarTime3"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/edtTeam4" />
+                app:layout_constraintStart_toEndOf="@+id/edtTeam4"
+                app:layout_constraintTop_toBottomOf="@+id/btnAdicionarTime3" />
 
             <RadioGroup
                 android:id="@+id/radioGroup"
@@ -111,6 +120,7 @@
                     android:button="@android:color/transparent"
                     android:checked="true"
                     android:padding="10dp"
+                    android:gravity="center"
                     android:text="@string/a_mesma_pergunta_vai_para_todos_os_participantes" />
 
                 <RadioButton
@@ -122,15 +132,9 @@
                     android:background="@drawable/checkboxselector"
                     android:button="@android:color/transparent"
                     android:padding="10dp"
+                    android:gravity="center"
                     android:text="@string/uma_pergunta_para_cada_participante" />
             </RadioGroup>
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="192dp" />
 
             <EditText
                 android:id="@+id/edtTeam3"
@@ -139,12 +143,13 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/colorPrimary"
                 android:ems="10"
                 android:hint="@string/time_3"
-                android:maxLength="10"
                 android:inputType="textPersonName"
+                android:maxLength="10"
                 android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@+id/guideline11"
+                app:layout_constraintEnd_toStartOf="@+id/guideline8"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtTeam2"
@@ -157,23 +162,17 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:backgroundTint="@color/colorPrimary"
                 android:ems="10"
                 android:hint="@string/time_4"
-                android:maxLength="10"
                 android:inputType="textPersonName"
+                android:maxLength="10"
                 android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@+id/guideline11"
+                app:layout_constraintEnd_toStartOf="@+id/guideline8"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtTeam3"
                 tools:ignore="Autofill" />
-
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.5" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -265,6 +264,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:progressTint="@color/colorPrimaryDark"
+                android:thumbTint="@color/colorPrimary"
                 app:layout_constraintEnd_toStartOf="@+id/tvKidsPoints"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -276,6 +277,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:progressTint="@color/colorPrimaryDark"
+                android:thumbTint="@color/colorPrimary"
                 app:layout_constraintEnd_toStartOf="@+id/tvFacilPoints"
                 app:layout_constraintStart_toEndOf="@+id/textView11"
                 app:layout_constraintTop_toBottomOf="@+id/sbKids" />
@@ -287,6 +290,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:progressTint="@color/colorPrimaryDark"
+                android:thumbTint="@color/colorPrimary"
                 app:layout_constraintEnd_toStartOf="@+id/tvMedioPoints"
                 app:layout_constraintStart_toEndOf="@+id/textView12"
                 app:layout_constraintTop_toBottomOf="@+id/sbFacil" />
@@ -298,17 +303,19 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:progressTint="@color/colorPrimaryDark"
+                android:thumbTint="@color/colorPrimary"
                 app:layout_constraintEnd_toStartOf="@+id/tvDificilPoints"
                 app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toEndOf="@+id/textView13"
                 app:layout_constraintTop_toBottomOf="@+id/sbMedio" />
 
             <android.support.constraint.Guideline
-                android:id="@+id/guideline11"
+                android:id="@+id/guideline8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.85" />
+                app:layout_constraintGuide_percent=".85" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
@@ -322,6 +329,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/continuar"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_orange"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

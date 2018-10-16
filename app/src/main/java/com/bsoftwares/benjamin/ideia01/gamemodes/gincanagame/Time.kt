@@ -1,8 +1,7 @@
-package com.bsoftwares.benjamin.ideia01.GameModes.GinganaGame
+package com.bsoftwares.benjamin.ideia01.gamemodes.gincanagame
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class Time () : Parcelable{

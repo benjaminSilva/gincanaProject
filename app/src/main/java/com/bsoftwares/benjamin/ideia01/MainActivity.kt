@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 //import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
-import android.widget.Toast
-import com.bsoftwares.benjamin.ideia01.Questions.Question
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionModel
-import com.bsoftwares.benjamin.ideia01.Questions.QuestionParcelable
-import com.bsoftwares.benjamin.ideia01.StartActivities.StartFragment
-import com.bsoftwares.benjamin.ideia01.StartActivities.StartGincanaFragment
-import com.bsoftwares.benjamin.ideia01.StartActivities.StartShowGameFragment
+import com.bsoftwares.benjamin.ideia01.questions.Question
+import com.bsoftwares.benjamin.ideia01.questions.QuestionModel
+import com.bsoftwares.benjamin.ideia01.questions.QuestionParcelable
+import com.bsoftwares.benjamin.ideia01.startactivities.StartFragment
+import com.bsoftwares.benjamin.ideia01.startactivities.StartGincanaFragment
+import com.bsoftwares.benjamin.ideia01.startactivities.StartShowGameFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -46,12 +44,13 @@ class MainActivity : AppCompatActivity(), Observer{
         if(dataFirabase!=null){
             data = dataFirabase
             criarParcelable()
-            var bundle = Bundle()
-            bundle.putParcelableArrayList("Perguntas",lista)
-            startFragment.arguments = bundle
             carregandoMain.visibility = View.INVISIBLE
             navigation.visibility = View.VISIBLE
-            supportFragmentManager.beginTransaction().replace(R.id.frameMain,startFragment).commit()
+            navigation.selectedItemId = R.id.game_show
+            /*val bundle = Bundle()
+            bundle.putParcelableArrayList("Perguntas",lista)
+            startFragment.arguments = bundle
+            supportFragmentManager.beginTransaction().replace(R.id.frameMain,startFragment).commit()*/
         }
     }
 
@@ -69,21 +68,21 @@ class MainActivity : AppCompatActivity(), Observer{
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_home -> {
+            R.id.free_play -> {
                 val bundle = Bundle()
                 bundle.putParcelableArrayList("Perguntas",lista)
                 startFragment.arguments = bundle
                 supportFragmentManager.beginTransaction().replace(R.id.frameMain,startFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
+            R.id.game_show -> {
                 val bundle = Bundle()
                 bundle.putParcelableArrayList("Perguntas",lista)
                 showFragment.arguments = bundle
                 supportFragmentManager.beginTransaction().replace(R.id.frameMain,showFragment).commit()
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
+            R.id.gincana -> {
                 val bundle = Bundle()
                 bundle.putParcelableArrayList("Perguntas",lista)
                 gincanaFragment.arguments = bundle
