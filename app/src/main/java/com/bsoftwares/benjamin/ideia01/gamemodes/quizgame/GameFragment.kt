@@ -93,6 +93,9 @@ class GameFragment : Fragment() {
         btnAnswer2.isClickable = false
         btnAnswer3.isClickable = false
         btnAnswer4.isClickable = false
+        btnTentativaExtra.isClickable = false
+        btnAjudaCartas.isClickable = false
+        btnReferencia.isClickable = false
         btnDesistir.isClickable = false
     }
 
@@ -101,6 +104,9 @@ class GameFragment : Fragment() {
         btnAnswer2.isClickable = true
         btnAnswer3.isClickable = true
         btnAnswer4.isClickable = true
+        btnTentativaExtra.isClickable = true
+        btnAjudaCartas.isClickable = true
+        btnReferencia.isClickable = true
         btnDesistir.isClickable = true
     }
 
@@ -127,15 +133,19 @@ class GameFragment : Fragment() {
     }
 
     fun irParaResultados(listaPerguntas: ArrayList<QuestionParcelable>?) {
+        desbilitarBotoes()
         val bundle = Bundle()
         bundle.putParcelableArrayList("PerguntasSelecionadas", listaPerguntas)
         resultsFragment.arguments = bundle
-        if (isTempo)
+        if (isTempo){
             timer.cancel()
+            isTempo = false
+        }
         if (isGameShow)
             bundle.putInt("pontuacao", pontuacao)
         activity!!.supportFragmentManager.beginTransaction().add(R.id.frameGame, resultsFragment,"GameResultado").commit()
         Handler().postDelayed({
+            habilitarBotoes()
             activity!!.supportFragmentManager.beginTransaction().remove(this).commit()
         }, 1000)
 
@@ -182,11 +192,12 @@ class GameFragment : Fragment() {
 
         if ((pos + 1) < listaPerguntas.size && isGameShow)
             YoYo.with(Techniques.FadeOut)
-                    .duration(1000)
+                    .duration(700)
                     .playOn(gameLayout)
 
         if (isGameShow) {
             timer.cancel()
+            isTempo = false
         }
 
         Handler().postDelayed({
@@ -247,7 +258,7 @@ class GameFragment : Fragment() {
 
         btnDesistir.setOnClickListener {
             if (position == 0)
-                pontuacao = 500
+                pontuacao = 0
             else
                 pontuacao = listaValores[position - 1]
             irParaResultados(listaPerguntas)
@@ -328,13 +339,18 @@ class GameFragment : Fragment() {
             }
             if (!tentativaExtra) {
                 val dialogView = Dialog(context!!, R.style.mydialog)
-                isTempo = true
                 dialogView.setContentView(R.layout.proxima_pergunta)
                 dialogView.setCancelable(false)
                 dialogView.txtValorPergunta.text = getString(R.string.valor_pergunta, listaValores[position])
                 YoYo.with(Techniques.FadeIn)
-                        .duration(600)
-                        .playOn(dialogView.proximaPerguntaView)
+                        .duration(500)
+                        .playOn(dialogView.txtValorPergunta)
+                YoYo.with(Techniques.FadeIn)
+                        .duration(500)
+                        .playOn(dialogView.btnNextQuestion)
+                YoYo.with(Techniques.FadeIn)
+                        .duration(500)
+                        .playOn(dialogView.btnDesistirFinal)
                 if (position == 15)
                     dialogView.btnDesistirFinal.visibility = View.VISIBLE
                 dialogView.btnDesistirFinal.setOnClickListener {
@@ -343,10 +359,17 @@ class GameFragment : Fragment() {
                     dialogView.dismiss()
                 }
                 dialogView.btnNextQuestion.setOnClickListener {
+                    isTempo = true
                     dialogView.btnNextQuestion.isClickable = false
                     YoYo.with(Techniques.FadeOut)
                             .duration(500)
-                            .playOn(dialogView.proximaPerguntaView)
+                            .playOn(dialogView.txtValorPergunta)
+                    YoYo.with(Techniques.FadeOut)
+                            .duration(500)
+                            .playOn(dialogView.btnNextQuestion)
+                    YoYo.with(Techniques.FadeOut)
+                            .duration(500)
+                            .playOn(dialogView.btnDesistirFinal)
                     Handler().postDelayed({
                         YoYo.with(Techniques.FadeIn)
                                 .duration(600)
@@ -430,8 +453,10 @@ class GameFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         onResume = true
-        if (isTempo)
+        if (isTempo){
             timer.cancel()
+            isTempo = false
+        }
     }
 
     override fun onResume() {
@@ -443,8 +468,10 @@ class GameFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (isTempo)
+        if (isTempo){
             timer.cancel()
+            isTempo = false
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

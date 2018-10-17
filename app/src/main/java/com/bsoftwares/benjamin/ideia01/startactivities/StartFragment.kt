@@ -116,6 +116,7 @@ class StartFragment : Fragment(){
             val dialogView = activity!!.layoutInflater.inflate(R.layout.rules,null)
             var nMaxQuestoes = 0
             var progresso = 5
+            checkCounter = 0
 
             if(sharedPref.contains("perguntasCrianca")){
                 if(sharedPref.getBoolean("perguntasCrianca",false)){
@@ -218,7 +219,10 @@ class StartFragment : Fragment(){
                 Toast.makeText(context,"Pelo menos uma dificuldade deve ficar selecionada",Toast.LENGTH_SHORT).show()
             } else{
                 view.sbNquestoes.max = getMax(view)
-                view.txtProgress.text = getString(R.string.nquestoes,progresso,view.sbNquestoes.max)
+                if (progresso>view.sbNquestoes.max)
+                    view.txtProgress.text = getString(R.string.nquestoes,view.sbNquestoes.max,view.sbNquestoes.max)
+                else
+                    view.txtProgress.text = getString(R.string.nquestoes,progresso,view.sbNquestoes.max)
                 checkCounter--
             }
         }else{
