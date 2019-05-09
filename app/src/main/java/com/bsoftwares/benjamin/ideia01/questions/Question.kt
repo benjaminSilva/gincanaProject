@@ -23,7 +23,7 @@ class Question (snapshot: DataSnapshot){
 
     init {
         try {
-            val data : HashMap<String,Any> = snapshot.value as HashMap<String, Any>
+            val data : HashMap<*, *> = snapshot.value as HashMap<*, *>
             id = snapshot.key?: ""
             question = data["question"] as String
             answerB = data["answerB"] as String

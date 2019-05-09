@@ -39,21 +39,10 @@ class GincanaResultsAdapter(val resultado: ArrayList<QuestionParcelable>, val ti
             holder.view.txtDificuldadeResults.text = resultado[position].dificulty
             for (i in 0..times!!.size - 1) {
                 timesbtns[i].text = times[i].nome
-                timesbtns[i].backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(gincana.context!!, R.color.wrongAnswer))
                 for (j in 0..resultado[position].timesAcertaram.size - 1) {
-                    if (resultado[position].timesAcertaram[j] == times[i].nome) {
+                    if (resultado[position].timesAcertaram[j] == times[i].nome)
                         timesbtns[i].backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(gincana.context!!, R.color.correctAnswer))
-                        if (resultado[position].dificulty == "K")
-                            times[i].pontuacao += gincana.pontos!![0]
-                        if (resultado[position].dificulty == "F")
-                            times[i].pontuacao += gincana.pontos!![1]
-                        if (resultado[position].dificulty == "M")
-                            times[i].pontuacao += gincana.pontos!![2]
-                        if (resultado[position].dificulty == "D")
-                            times[i].pontuacao += gincana.pontos!![3]
-                    }
                 }
-
                 timesbtns[i].visibility = View.VISIBLE
             }
         } else {
@@ -61,22 +50,9 @@ class GincanaResultsAdapter(val resultado: ArrayList<QuestionParcelable>, val ti
             if (resultado[position].selectedAnswer != resultado[position].correctAnswer) {
                 holder.view.txtQuestionNumberResultGincana.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_thumb_down_black_24dp, 0)
                 timesbtns[0].text = resultado[position].selectedAnswer
-                timesbtns[0].backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(gincana.context!!, R.color.wrongAnswer))
                 timesbtns[1].text = resultado[position].correctAnswer
                 timesbtns[1].backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(gincana.context!!, R.color.correctAnswer))
             } else {
-                for(time : Time in times!!){
-                    if(time.nome == resultado[position].timesAcertaram[0]){
-                        if (resultado[position].dificulty == "K")
-                            time.pontuacao += gincana.pontos!![0]
-                        if (resultado[position].dificulty == "F")
-                            time.pontuacao += gincana.pontos!![1]
-                        if (resultado[position].dificulty == "M")
-                            time.pontuacao += gincana.pontos!![2]
-                        if (resultado[position].dificulty == "D")
-                            time.pontuacao += gincana.pontos!![3]
-                    }
-                }
                 holder.view.txtQuestionNumberResultGincana.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_thumb_up_black_24dp, 0)
                 timesbtns[0].text = resultado[position].selectedAnswer
                 timesbtns[0].backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(gincana.context!!, R.color.correctAnswer))
@@ -108,10 +84,7 @@ class GincanaResultsAdapter(val resultado: ArrayList<QuestionParcelable>, val ti
             }
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Fechar") { dialog, which -> dialog.dismiss() }
             alertDialog.show()
-
-
             return@setOnLongClickListener true
-
         }
     }
 
@@ -119,13 +92,5 @@ class GincanaResultsAdapter(val resultado: ArrayList<QuestionParcelable>, val ti
 
 class CustomViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     init {
-        /*view.setOnClickListener {
-            if(view.hiddenResult.visibility == View.GONE){
-                view.hiddenResult.visibility = View.VISIBLE
-            }
-            else {
-                view.hiddenResult.visibility = View.GONE
-            }
-        }*/
     }
 }

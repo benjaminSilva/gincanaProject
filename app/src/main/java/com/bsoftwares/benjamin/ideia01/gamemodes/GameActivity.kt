@@ -5,10 +5,11 @@ import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import com.bsoftwares.benjamin.ideia01.gamemodes.gincanagame.GincanaTeams
+import com.bsoftwares.benjamin.ideia01.gamemodes.gincanagame.GincanaSettings
 import com.bsoftwares.benjamin.ideia01.gamemodes.quizgame.GameFragment
 import com.bsoftwares.benjamin.ideia01.questions.QuestionParcelable
 import com.bsoftwares.benjamin.ideia01.R
+import com.bsoftwares.benjamin.ideia01.gamemodes.gincanagame.GincanaTeams
 
 class GameActivity : AppCompatActivity() {
 
@@ -25,8 +26,10 @@ class GameActivity : AppCompatActivity() {
             gincanaTeams.arguments = bundle
             supportFragmentManager.beginTransaction().replace(R.id.frameGame, gincanaTeams).commit()
         }else{
-            if (intent.extras!!.containsKey("isGameShow"))
+            if (intent.extras!!.containsKey("isGameShow")){
+                bundle.putString("Jogador",intent.extras!!.getString("Jogador"))
                 bundle.putBoolean("isGameShow",intent.extras!!.getBoolean("isGameShow"))
+            }
             else
                 bundle.putBoolean("tempoParaPergunta",intent.extras!!.getBoolean("tempoParaPergunta"))
             var fragment = supportFragmentManager.findFragmentByTag("Game Fragment")

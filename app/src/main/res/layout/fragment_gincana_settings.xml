@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".gamemodes.gincanagame.GincanaSettings">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNextGincanaRules"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="59dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="8dp"
+                android:text="@string/kids"
+                app:layout_constraintBottom_toBottomOf="@+id/sbKids"
+                app:layout_constraintStart_toStartOf="@+id/radioGroup"
+                app:layout_constraintTop_toTopOf="@+id/sbKids" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/perguntasValem"
+                app:layout_constraintStart_toStartOf="@+id/radioGroup"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="59dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/f_cil"
+                app:layout_constraintBottom_toBottomOf="@+id/sbFacil"
+                app:layout_constraintStart_toStartOf="@+id/radioGroup"
+                app:layout_constraintTop_toTopOf="@+id/sbFacil" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="59dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/m_dio"
+                app:layout_constraintBottom_toBottomOf="@+id/sbMedio"
+                app:layout_constraintStart_toStartOf="@+id/radioGroup"
+                app:layout_constraintTop_toTopOf="@+id/sbMedio" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/dif_cil"
+                app:layout_constraintBottom_toBottomOf="@+id/sbDificil"
+                app:layout_constraintEnd_toEndOf="@+id/textView12"
+                app:layout_constraintStart_toStartOf="@+id/radioGroup"
+                app:layout_constraintTop_toTopOf="@+id/sbDificil" />
+
+            <TextView
+                android:id="@+id/tvKidsPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/sbKids"
+                app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+                app:layout_constraintTop_toTopOf="@+id/sbKids" />
+
+            <TextView
+                android:id="@+id/tvFacilPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/sbFacil"
+                app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+                app:layout_constraintTop_toTopOf="@+id/sbFacil" />
+
+            <TextView
+                android:id="@+id/tvMedioPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/sbMedio"
+                app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+                app:layout_constraintTop_toTopOf="@+id/sbMedio" />
+
+            <TextView
+                android:id="@+id/tvDificilPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/sbDificil"
+                app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+                app:layout_constraintTop_toTopOf="@+id/sbDificil" />
+
+            <SeekBar
+                android:id="@+id/sbKids"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:progressTint="@color/colorPrimaryDark"
+                android:thumbTint="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/tvKidsPoints"
+                app:layout_constraintStart_toEndOf="@+id/textView9"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+            <SeekBar
+                android:id="@+id/sbFacil"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:progressTint="@color/colorPrimaryDark"
+                android:thumbTint="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/tvFacilPoints"
+                app:layout_constraintStart_toEndOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/sbKids" />
+
+            <SeekBar
+                android:id="@+id/sbMedio"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:progressTint="@color/colorPrimaryDark"
+                android:thumbTint="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/tvMedioPoints"
+                app:layout_constraintStart_toEndOf="@+id/textView12"
+                app:layout_constraintTop_toBottomOf="@+id/sbFacil" />
+
+            <SeekBar
+                android:id="@+id/sbDificil"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:progressTint="@color/colorPrimaryDark"
+                android:thumbTint="@color/colorPrimary"
+                app:layout_constraintEnd_toStartOf="@+id/tvDificilPoints"
+                app:layout_constraintHorizontal_bias="0.502"
+                app:layout_constraintStart_toEndOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/sbMedio" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14">
+
+
+                <RadioButton
+                    android:id="@+id/rbTodosTimes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkboxselector"
+                    android:button="@android:color/transparent"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/a_mesma_pergunta_vai_para_todos_os_participantes" />
+
+                <RadioButton
+                    android:id="@+id/rbApenasUmTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/checkboxselector"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/uma_pergunta_para_cada_participante" />
+            </RadioGroup>
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".85" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/modos_de_gincana"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sbDificil" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/btnNextGincanaRules"
+        android:layout_width="0dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_gradient"
+        android:text="@string/continuar"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

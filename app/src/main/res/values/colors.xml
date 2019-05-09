@@ -6,7 +6,9 @@
 
     //Cores de resposta
     <color name="correctAnswer">#7CC37C</color>
+    <color name="getRight">#ccffcc</color>
     <color name="wrongAnswer">#f85441</color>
+    <color name="getWrong">#ffb6ad</color>
     <color name="regularAnswer">#d2cdc7</color>
 
     //Basic Colors

@@ -6,49 +6,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context=".gamemodes.quizgame.GameFragment"
     android:background="@drawable/gradient_orange"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context=".gamemodes.quizgame.GameFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/TxtQuestionNumber"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text=""
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/TxtQuestion"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:animateLayoutChanges="true"
-            android:text=""
+            android:breakStrategy="balanced"
+            android:gravity="center"
+            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:fontFamily="@font/arvo"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@+id/btnAnswer1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TxtQuestionNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/txtQuestionNumber" />
 
         <Button
             android:id="@+id/btnAnswer1"
             android:layout_width="0dp"
             android:layout_height="80sp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="4dp"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/btn_white"
             android:padding="10sp"
+            android:breakStrategy="balanced"
+
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="1.0"
@@ -58,11 +55,12 @@
             android:id="@+id/btnAnswer2"
             android:layout_width="0dp"
             android:layout_height="80sp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/btn_white"
             android:padding="10sp"
+            android:breakStrategy="balanced"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -73,11 +71,12 @@
             android:id="@+id/btnAnswer3"
             android:layout_width="0dp"
             android:layout_height="80sp"
-            android:layout_marginEnd="4dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/btn_white"
             android:padding="10sp"
+            android:breakStrategy="balanced"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,11 +86,12 @@
             android:id="@+id/btnAnswer4"
             android:layout_width="0dp"
             android:layout_height="80sp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/btn_white"
             android:padding="10sp"
+            android:breakStrategy="balanced"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -128,10 +128,10 @@
             android:id="@+id/btnAjudaCartas"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/btn_white"
             android:text="@string/ajuda_as_cartas"
             app:layout_constraintBottom_toTopOf="@+id/txtTimerQuiz"
@@ -143,10 +143,10 @@
             android:id="@+id/btnReferencia"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/btn_white"
             android:text="@string/dica_refer_ncia"
             app:layout_constraintBottom_toTopOf="@+id/txtTimerQuiz"
@@ -158,10 +158,10 @@
             android:id="@+id/btnTentativaExtra"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/btn_white"
             android:text="@string/tentativa_extra"
             app:layout_constraintBottom_toTopOf="@+id/txtTimerQuiz"
@@ -191,26 +191,64 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/btn_white"
-            android:text="Desistir"
+            android:text="@string/desistir"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/txtValoresPerguntas"
-            android:layout_width="0dp"
+        <Button
+            android:id="@+id/btn_errar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:textAlignment="textEnd"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/TxtQuestionNumber"
+
+            android:background="@drawable/btn_white"
+            android:backgroundTint="@color/getWrong"
+            app:layout_constraintEnd_toStartOf="@+id/btn_desistir"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_acertar"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/btn_desistir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/btn_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_errar"
+            app:layout_constraintTop_toTopOf="@+id/btn_errar" />
 
+        <Button
+            android:id="@+id/btn_acertar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/btn_white"
+            android:backgroundTint="@color/getRight"
+            app:layout_constraintEnd_toStartOf="@+id/btn_errar"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_errar" />
+
+        <TextView
+            android:id="@+id/txtQuestionNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_errar" />
+
+    </android.support.constraint.ConstraintLayout>
 
 
 </ScrollView>

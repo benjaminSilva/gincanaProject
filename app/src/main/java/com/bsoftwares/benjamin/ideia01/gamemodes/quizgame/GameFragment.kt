@@ -3,6 +3,7 @@ package com.bsoftwares.benjamin.ideia01.gamemodes.quizgame
 
 import android.app.Dialog
 import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -12,16 +13,20 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import com.bsoftwares.benjamin.ideia01.*
+import com.bsoftwares.benjamin.ideia01.R.id.gameLayout
 import com.bsoftwares.benjamin.ideia01.questions.QuestionParcelable
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import kotlinx.android.synthetic.main.cartas.*
 import kotlinx.android.synthetic.main.fragment_game.*
+import kotlinx.android.synthetic.main.fragment_gincana_scores.*
 import kotlinx.android.synthetic.main.proxima_pergunta.*
+import java.text.BreakIterator
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -63,6 +68,9 @@ class GameFragment : Fragment() {
                     btnAjudaCartas.visibility = View.GONE
                     btnReferencia.visibility = View.GONE
                     btnDesistir.visibility = View.GONE
+                    btn_acertar.visibility = View.INVISIBLE
+                    btn_errar.visibility = View.INVISIBLE
+                    btn_desistir.visibility = View.INVISIBLE
                 }
                 isTempo = arguments!!.getBoolean("tempoParaPergunta")
                 if (isTempo && !isGameShow) {
@@ -141,13 +149,15 @@ class GameFragment : Fragment() {
             timer.cancel()
             isTempo = false
         }
-        if (isGameShow)
+        if (isGameShow){
             bundle.putInt("pontuacao", pontuacao)
-        activity!!.supportFragmentManager.beginTransaction().add(R.id.frameGame, resultsFragment,"GameResultado").commit()
-        Handler().postDelayed({
+            bundle.putString("Jogador",arguments!!.getString("Jogador",""))
+        }
+        activity!!.supportFragmentManager.beginTransaction().replace(R.id.frameGame, resultsFragment,"GameResultado").commit()
+        /*Handler().postDelayed({
             habilitarBotoes()
             activity!!.supportFragmentManager.beginTransaction().remove(this).commit()
-        }, 1000)
+        }, 1000)*/
 
     }
 
@@ -188,7 +198,7 @@ class GameFragment : Fragment() {
         }
 
         if ((pos + 1) < listaPerguntas.size && !isGameShow)
-            animateAllViews(escolhido, outro1, outro2, outro3, TxtQuestion, Techniques.FadeOut, 1000)
+            animateAllViews(escolhido, outro1, outro2, outro3, TxtQuestion, Techniques.FadeOut, 500)
 
         if ((pos + 1) < listaPerguntas.size && isGameShow)
             YoYo.with(Techniques.FadeOut)
@@ -274,6 +284,21 @@ class GameFragment : Fragment() {
             btnAjudaCartas.isClickable = false
             btnTentativaExtra.isClickable = false
             btnReferencia.visibility = View.GONE
+            timer.cancel()
+            timer = object : CountDownTimer(100000, 1000) {
+                override fun onFinish() {
+                    when (position) {
+                        0 -> pontuacao = 0
+                        else -> pontuacao = listaValores[position] / 4
+                    }
+                    irParaResultados(listaPerguntas)
+                }
+
+                override fun onTick(p0: Long) {
+                    tempo = p0/1000
+                    txtTimerQuiz.text = (p0 / 1000).toString()
+                }
+            }.start()
             Toast.makeText(context, listaPerguntas[position].reference, Toast.LENGTH_LONG).show()
         }
 
@@ -327,30 +352,36 @@ class GameFragment : Fragment() {
             btnAjudaCartas.isClickable = true
             when (position) {
 
-                0 -> txtValoresPerguntas.text = getString(R.string.valor_resultado, listaValores[position], 0, 0)
+                0 -> {
+                    btn_acertar.text = getString(R.string.acertar, listaValores[position])
+                    btn_errar.text = getString(R.string.errar,0)
+                    btn_desistir.text = getString(R.string.Desistir,0)
+                }
+
                 15 -> {
-                    txtValoresPerguntas.text = getString(R.string.valor_resultado, listaValores[position], 0, 0)
+                    btn_acertar.text = getString(R.string.acertar, listaValores[position])
+                    btn_errar.text = getString(R.string.errar,0)
+                    btn_desistir.text = getString(R.string.Desistir,0)
                     btnTentativaExtra.visibility = View.GONE
                     btnAjudaCartas.visibility = View.GONE
                     btnReferencia.visibility = View.GONE
                     btnDesistir.visibility = View.GONE
                 }
-                else -> txtValoresPerguntas.text = getString(R.string.valor_resultado, listaValores[position], listaValores[position - 1], listaValores[position] / 4)
+                else ->{
+                    btn_acertar.text = getString(R.string.acertar, listaValores[position])
+                    btn_errar.text = getString(R.string.errar,listaValores[position] / 4)
+                    btn_desistir.text = getString(R.string.Desistir,listaValores[position - 1])
+                }
             }
             if (!tentativaExtra) {
                 val dialogView = Dialog(context!!, R.style.mydialog)
                 dialogView.setContentView(R.layout.proxima_pergunta)
                 dialogView.setCancelable(false)
-                dialogView.txtValorPergunta.text = getString(R.string.valor_pergunta, listaValores[position])
+                dialogView.txtValorPergunta.text = getString(R.string.valor_pergunta )
+                dialogView.txtViewValor.text = getString(R.string.pergunta_valor,listaValores[position])
                 YoYo.with(Techniques.FadeIn)
                         .duration(500)
-                        .playOn(dialogView.txtValorPergunta)
-                YoYo.with(Techniques.FadeIn)
-                        .duration(500)
-                        .playOn(dialogView.btnNextQuestion)
-                YoYo.with(Techniques.FadeIn)
-                        .duration(500)
-                        .playOn(dialogView.btnDesistirFinal)
+                        .playOn(dialogView.proximaPerguntaView)
                 if (position == 15)
                     dialogView.btnDesistirFinal.visibility = View.VISIBLE
                 dialogView.btnDesistirFinal.setOnClickListener {
@@ -362,16 +393,11 @@ class GameFragment : Fragment() {
                     isTempo = true
                     dialogView.btnNextQuestion.isClickable = false
                     YoYo.with(Techniques.FadeOut)
-                            .duration(500)
-                            .playOn(dialogView.txtValorPergunta)
-                    YoYo.with(Techniques.FadeOut)
-                            .duration(500)
-                            .playOn(dialogView.btnNextQuestion)
-                    YoYo.with(Techniques.FadeOut)
-                            .duration(500)
-                            .playOn(dialogView.btnDesistirFinal)
+                        .duration(500)
+                        .playOn(dialogView.proximaPerguntaView)
+
                     Handler().postDelayed({
-                        YoYo.with(Techniques.FadeIn)
+                    YoYo.with(Techniques.FadeIn)
                                 .duration(600)
                                 .playOn(gameLayout)
                         Handler().postDelayed({
@@ -415,7 +441,20 @@ class GameFragment : Fragment() {
             perguntas.add(listaPerguntas[position].answerD)
             perguntas.shuffle()
             TxtQuestion.text = listaPerguntas[position].question
-            TxtQuestionNumber.text = getString(R.string.pergunta, position + 1)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                TxtQuestion.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,30,5,2)
+                btnAnswer1.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,20,5,2)
+                btnAnswer2.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,20,5,2)
+                btnAnswer3.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,20,5,2)
+                btnAnswer4.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,20,5,2)
+                btnAjudaCartas.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,16,5,2)
+                btnTentativaExtra.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,16,5,2)
+                btnReferencia.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,16,5,2)
+                btn_acertar.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,16,5,2)
+                btn_desistir.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,16,5,2)
+                btn_errar.setAutoSizeTextTypeUniformWithConfiguration(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM,16,5,2)
+            }
+            txtQuestionNumber.text = getString(R.string.pergunta,(position + 1))
             btnAnswer1.text = perguntas[0]
             btnAnswer2.text = perguntas[1]
             btnAnswer3.text = perguntas[2]
@@ -455,7 +494,6 @@ class GameFragment : Fragment() {
         onResume = true
         if (isTempo){
             timer.cancel()
-            isTempo = false
         }
     }
 

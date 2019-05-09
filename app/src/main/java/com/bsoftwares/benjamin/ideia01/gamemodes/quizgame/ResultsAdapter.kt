@@ -65,16 +65,3 @@ class ResultsAdapter(val resultado : ArrayList<QuestionParcelable>, val context:
     }
 
 }
-
-class CustomViewHolder(val view : View): RecyclerView.ViewHolder(view){
-    init {
-        /*view.setOnClickListener {
-            if(view.hiddenResult.visibility == View.GONE){
-                view.hiddenResult.visibility = View.VISIBLE
-            }
-            else {
-                view.hiddenResult.visibility = View.GONE
-            }
-        }*/
-    }
-}

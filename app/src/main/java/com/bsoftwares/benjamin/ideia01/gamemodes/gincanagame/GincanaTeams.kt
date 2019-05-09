@@ -3,18 +3,18 @@ package com.bsoftwares.benjamin.ideia01.gamemodes.gincanagame
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.SeekBar
 import android.widget.Toast
 
 import com.bsoftwares.benjamin.ideia01.R
 import kotlinx.android.synthetic.main.fragment_gincana_teams.*
 
-
-class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
+class GincanaTeams : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -24,40 +24,21 @@ class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
 
     val editTexts = ArrayList<EditText>()
     val times = ArrayList<Time>()
-    var gincanaScores = GincanaScores()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         editTexts.add(edtTeam1)
         editTexts.add(edtTeam2)
 
-        rbTodosTimes.isChecked = true
-
-        sbKids.setOnSeekBarChangeListener(this)
-        sbFacil.setOnSeekBarChangeListener(this)
-        sbMedio.setOnSeekBarChangeListener(this)
-        sbDificil.setOnSeekBarChangeListener(this)
-        sbKids.max = 20
-        sbFacil.max = 20
-        sbMedio.max = 20
-        sbDificil.max = 20
-        sbKids.progress = 3
-        sbFacil.progress = 4
-        sbMedio.progress = 7
-        sbDificil.progress = 10
-        tvKidsPoints.text = 15.toString()
-        tvFacilPoints.text = 20.toString()
-        tvMedioPoints.text = 35.toString()
-        tvDificilPoints.text = 50.toString()
-
         btnAdicionarTime3.setOnClickListener {
-            if (btnAdicionarTime3.text == "+") {
+            if (btnAdicionarTime3.text == getString(R.string.mais)) {
                 editTexts.add(edtTeam3)
                 edtTeam3.visibility = View.VISIBLE
                 btnAdicionarTime4.visibility = View.VISIBLE
-                btnAdicionarTime3.text = "-"
+                btnAdicionarTime3.text = getString(R.string.menos)
             } else {
                 editTexts.remove(edtTeam3)
                 if (editTexts.contains(edtTeam4))
@@ -65,43 +46,63 @@ class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
                 edtTeam3.visibility = View.GONE
                 edtTeam4.visibility = View.GONE
                 btnAdicionarTime4.visibility = View.GONE
-                btnAdicionarTime3.text = "+"
-                btnAdicionarTime4.text = "+"
+                btnAdicionarTime3.text = getString(R.string.mais)
+                btnAdicionarTime4.text = getString(R.string.mais)
             }
         }
         btnAdicionarTime4.setOnClickListener {
-            if (btnAdicionarTime4.text == "+") {
+            if (btnAdicionarTime4.text == getString(R.string.mais)) {
                 editTexts.add(edtTeam4)
                 edtTeam4.visibility = View.VISIBLE
-                btnAdicionarTime4.text = "-"
+                btnAdicionarTime4.text = getString(R.string.menos)
             } else {
                 editTexts.remove(edtTeam4)
                 edtTeam4.visibility = View.GONE
-                btnAdicionarTime4.text = "+"
+                btnAdicionarTime4.text = getString(R.string.mais)
             }
         }
 
-        btnNextGincanaRules.setOnClickListener {
-            if (areAllNamesOk()) {
-                val pontos = ArrayList<Int>()
-                var todosRespondem = true
-                if (rbApenasUmTime.isChecked)
-                    todosRespondem = false
-                pontos.add(sbKids.progress * 5)
-                pontos.add(sbFacil.progress * 5)
-                pontos.add(sbMedio.progress * 5)
-                pontos.add(sbDificil.progress * 5)
-                var bundle = Bundle()
-                bundle.putIntegerArrayList("Pontos", pontos)
-                bundle.putBoolean("umOuTodos", todosRespondem)
-                bundle.putParcelableArrayList("Times", times)
-                bundle.putParcelableArrayList("PerguntasSelecionadas", arguments!!.getParcelableArrayList("PerguntasSelecionadas"))
-                gincanaScores.arguments = bundle
-                activity!!.supportFragmentManager.beginTransaction().replace(R.id.frameGame, gincanaScores, "GameGincanaScores").commit()
+        edtTeam2.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                if (edtTeam3.visibility != View.VISIBLE)
+                    irParaProximaTela()
+                return@OnKeyListener true
             }
+            false
+        })
+
+        edtTeam3.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                if (edtTeam4.visibility != View.VISIBLE)
+                    irParaProximaTela()
+                return@OnKeyListener true
+            }
+            false
+        })
+
+        edtTeam4.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_UP) {
+                irParaProximaTela()
+                return@OnKeyListener true
+            }
+            false
+        })
+
+        btnNextGincanaTeams.setOnClickListener {
+            irParaProximaTela()
         }
 
+    }
 
+    private fun irParaProximaTela(){
+        if (areAllNamesOk()){
+            val gincanaSettings = GincanaSettings()
+            val bundle = Bundle()
+            bundle.putParcelableArrayList("Times",times)
+            bundle.putParcelableArrayList("PerguntasSelecionadas", arguments!!.getParcelableArrayList("PerguntasSelecionadas"))
+            gincanaSettings.arguments = bundle
+            activity!!.supportFragmentManager.beginTransaction().replace(R.id.frameGame, gincanaSettings, "GameGincanaScores").commit()
+        }
     }
 
     private fun areAllNamesOk(): Boolean {
@@ -120,33 +121,4 @@ class GincanaTeams : Fragment(), SeekBar.OnSeekBarChangeListener {
     }
 
 
-    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, p2: Boolean) {
-        var nVezesCinco = progress * 5
-        if (progress < 1) {
-            seekBar!!.progress = 1
-            return
-        }
-
-        when (seekBar) {
-            sbKids -> {
-                tvKidsPoints.text = nVezesCinco.toString()
-            }
-            sbFacil -> {
-                tvFacilPoints.text = nVezesCinco.toString()
-            }
-            sbMedio -> {
-                tvMedioPoints.text = nVezesCinco.toString()
-            }
-            sbDificil -> {
-                tvDificilPoints.text = nVezesCinco.toString()
-            }
-
-        }
-    }
-
-    override fun onStartTrackingTouch(p0: SeekBar?) {
-    }
-
-    override fun onStopTrackingTouch(p0: SeekBar?) {
-    }
 }

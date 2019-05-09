@@ -12,7 +12,11 @@ object QuestionModel : Observable() {
     private var questionList: ArrayList<Question>? = ArrayList()
 
     private fun getDatabaseRef():DatabaseReference? {
-        return FirebaseDatabase.getInstance().reference.child("questions")
+        var firebaseDataBase = FirebaseDatabase.getInstance()
+        firebaseDataBase.setPersistenceEnabled(true)
+        var dataBase = firebaseDataBase.reference.child("questions")
+        dataBase.keepSynced(true)
+        return dataBase
     }
 
     init {
@@ -24,9 +28,7 @@ object QuestionModel : Observable() {
 
         mValueDataListener = object : ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                if(true){
-                    Log.i("CakeModel","Deu ruim")
-                }
+                Log.i("CakeModel","Deu ruim")
             }
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {

@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "242012823824-mdrcrvqu0vh8ofurgks1basutgqfg9j8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bsoftwares.benjamin.ideia01",
+            "certificate_hash": "5a0904dce4b8ba314eb4d6c92b925c23aa8566f6"
+          }
+        },
+        {
           "client_id": "242012823824-0npiualj2a08ct9h1sud9jmai0lclc8q.apps.googleusercontent.com",
           "client_type": 3
         }

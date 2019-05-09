@@ -4,16 +4,35 @@
     <string name="gincana">Gincana</string>
     <string name="start">Start</string>
 
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_game">GameActivity</string>
+
+    //Jogo
     <string name="pergunta">Pergunta %1$d</string>
+    <string name="referencia">Referência: %1$s</string>
+    <string name="refer_ncia">Referência</string>
+    <string name="opcaoX">%1$s) %2$s</string>
+    <string name="desistir">Desistir</string>
+    <string name="confirmacao">Confirmação</string>
+    <string name="pr_xima_pergunta">Próxima Pergunta</string>
+    <string name="ningu_m_acertou">Ninguém acertou</string>
+    <string name="ajuda_as_cartas">Ajuda as cartas</string>
+    <string name="dica_refer_ncia">Referência + Tempo</string>
+    <string name="tentativa_extra">Tentativa Extra</string>
+    <string name="valor_pergunta">Essa pergunta vale</string>
+    <string name="pergunta_valor">R$%1$d,00</string>
+    <string name="valor_resultado">R$%1$d</string>
+    <string name="acertar">Acertar\nR$%1$d</string>
+    <string name="errar">Errar\nR$%1$d</string>
+    <string name="Desistir">Desistir\nR$%1$d</string>
+
+    //Resultado
     <string name="pontuacao">%1$d/%2$d - Nota (%3$s/100)</string>
     <string name="nquestoes">%1$d/%2$d</string>
-    <string name="referencia">Referência: %1$s</string>
     <string name="resultado">Resultado</string>
+    <string name="resultados">Resultados</string>
     <string name="voltar">Voltar</string>
-    <string name="Regras">Regras</string>
+    <string name="resultado_parcial">Resultado Parcial</string>
+    <string name="resultado_final_game_show">Você ganhou R$%1$d</string>
 
     //Dificuldades
     <string name="dificuldade">Dificuldade</string>
@@ -22,21 +41,12 @@
     <string name="m_dio">Médio</string>
     <string name="dif_cil">Difícil</string>
 
-    <string name="quantidade_de_quest_es">Quantidade de questões</string>
-    <string name="tempo_5_segundos_por_quest_o">Tempo (10 Segundos por questão)</string>
-    <string name="ajuda_as_cartas">Ajuda as cartas</string>
-    <string name="dica_refer_ncia">Referência ou dica</string>
-    <string name="tentativa_extra">Tentativa Extra</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="valor_pergunta">Essa pergunta vale R$%1$d</string>
-    <string name="valor_resultado">Acertar R$%1$d | Desistir R$%2$d | Errar R$%3$d</string>
-    <string name="resultado_final_game_show">Você ganhou R$%1$d</string>
-    <string name="modo_gincana">Modo Gincana</string>
-    <string name="crie_at_4_times_para_competir_entre_si">Crie até 4 times para competir entre si</string>
-
-    <string name="mais">+</string>
-    <string name="a_mesma_pergunta_vai_para_todos_os_participantes">A mesma pergunta vai para todos os times participantes</string>
-    <string name="uma_pergunta_para_cada_participante">Uma pergunta para cada time participante</string>
+    //Texto Botões
+    <string name="mais">Adicionar Time</string>
+    <string name="menos">—</string>
+    <string name="quem_respondeu_correto">Quem respondeu a pergunta correta?</string>
+    <string name="a_mesma_pergunta_vai_para_todos_os_participantes">A mesma pergunta vai para todos os times e será selecionado quem acertou</string>
+    <string name="uma_pergunta_para_cada_participante">A pergunta é individual para cada time e será selecionado a resposta do time</string>
     <string name="adicione_o_nome_dos_times">Adicione o nome dos times</string>
     <string name="continuar">Continuar</string>
     <string name="nRodada">Rodada %1$d</string>
@@ -46,19 +56,45 @@
     <string name="time_2">Time 2</string>
     <string name="time_4">Time 4</string>
     <string name="time_3">Time 3</string>
+    <string name="confirmarTime">Confirma o(s) time(s)?</string>
+
+    //Telas iniciais e descrição
+    <string name="teste_suas_habilidades_criando_as_suas_regras">Teste suas habilidades criando as suas regras</string>
+    <string name="Regras">Regras</string>
+    <string name="ok">OK</string>
+    <string name="desesseisPerguntas">16 Perguntas em sequência. Se errar uma, está fora.</string>
+    <string name="free_play">Free Play</string>
+    <string name="quantidade_de_quest_es">Quantidade de questões</string>
+    <string name="tempo_5_segundos_por_quest_o">Tempo (10 Segundos por questão)</string>
+    <string name="modo_gincana">Modo\nGincana</string>
+    <string name="crie_at_4_times_para_competir_entre_si">Crie até 4 times para competir entre si</string>
 
     //Pontuacao
     <string name="pontuacaoTime">%1$s\n%2$d Pontos</string>
-    <string name="ok">OK</string>
-    <string name="refer_ncia">Referência</string>
-    <string name="ningu_m_acertou">Ninguém acertou</string>
-    <string name="teste_suas_habilidades_criando_as_suas_regras">Teste suas habilidades criando as suas regras</string>
-    <string name="free_play">Free Play</string>
-    <string name="pr_xima_pergunta">Próxima Pergunta</string>
-    <string name="resultado_parcial">Resultado Parcial</string>
-    <string name="confirmacao">Confirmação</string>
-    <string name="desistir">Desistir</string>
-    <string name="confirmarTime">Confirma o(s) time(s)?</string>
-    <string name="opcaoX">%1$s) %2$s</string>
-    <string name="resultados">Resultados</string>
+    <string name="perguntasValem">As perguntas valem quantos pontos?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="modos_de_gincana">Modos de gincana</string>
+    <string name="duvidas">\?</string>
+    <string name="ajuda">Ajuda</string>
+    <string name="ranking">Ranking</string>
+    <string name="config">Configurações</string>
+    <string name="ajustar_pontos">Ajustar os pontos do time?</string>
+    <string name="ajudaTxtTodosRespondem">Escolha uma dificuldade e confirme. Faça essa mesma pergunta a todos os times participantes. As opções estarão em cima com o destaque na resposta correta. Marque todos os times que responderem corretamente e confirme.\n\nÉ possível segurar em cima de uma pergunta, no resultado parcial, para removê-la da lista.\n\nÉ possível segurar no nome do time para fazer pequenos ajustes na pontuação.</string>
+    <string name="ajudaTxtCadaTime">Escolha uma dificuldade e um time para responder e confirme. Faça a pergunta para o time e marque a resposta que ele respondeu e confirme.\n\nÉ possível segurar em cima de uma pergunta, no resultado parcial, para removê-la da lista.\n\nÉ possível segurar no nome do time para fazer pequenos ajustes na pontuação.</string>
+    <string name="nome_do_jogador">Nome do Jogador</string>
+    <string name="envie_sua_pergunta">Envie sua pergunta</string>
+    <string name="sugest_o_de_pergunta">Sugestão de pergunta</string>
+    <string name="apenas_pergunta">Pergunta</string>
+    <string name="resposta_correta">Resposta Correta</string>
+    <string name="resposta_errada_1">Resposta errada 1</string>
+    <string name="resposta_errada_2">Resposta errada 2</string>
+    <string name="resposta_errada_3">Resposta errada 3</string>
+    <string name="refer_ncia_b_blica">Referência Bíblica</string>
+    <string name="imposs_vel">Impossível</string>
+    <string name="rate_us">Avalie-nos</string>
+    <string name="politicas_de_privacidade">Politicas de Privacidade</string>
+
+
 </resources>

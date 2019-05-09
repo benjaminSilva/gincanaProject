@@ -8,15 +8,18 @@ class Time () : Parcelable{
 
     lateinit var nome : String
     var pontuacao : Int = 0
+    var pontosAjuste : Int = 0
 
     constructor(parcel: Parcel) : this() {
         nome = parcel.readString()
         pontuacao = parcel.readInt()
+        pontosAjuste = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(nome)
         parcel.writeInt(pontuacao)
+        parcel.writeInt(pontosAjuste)
     }
 
     override fun describeContents(): Int {
